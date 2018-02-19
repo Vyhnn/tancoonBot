@@ -24,7 +24,7 @@ public class Main {
 		try {
 			jda = new JDABuilder(AccountType.BOT).setToken(token).addEventListener(new botListener()).buildBlocking();
 
-			jda.getPresence().setGame(Game.of(Game.GameType.DEFAULT, game[(int)(Math.random() * game.length)]));
+			jda.getPresence().setGame(Game.of(Game.GameType.DEFAULT, game[(int)(Math.random() * (game.length-1))]));
 				
 			
 		} catch (LoginException | IllegalArgumentException | InterruptedException e) {

@@ -718,7 +718,7 @@ public class botListener extends ListenerAdapter{
 						}
 						
 						//command music
-						else if(message[0].equalsIgnoreCase("v!music")) {
+						else if(message[0].equalsIgnoreCase("v!music")&&message.length>1) {
 							if(message[1].equals("skip")&&message.length==2){
 								skipTrack(e.getTextChannel());
 							}
@@ -726,7 +726,7 @@ public class botListener extends ListenerAdapter{
 								if(e.getGuild().getAudioManager().isConnected()){
 									e.getGuild().getAudioManager().closeAudioConnection();
 									
-									e.getJDA().getPresence().setGame(Game.of(Game.GameType.DEFAULT, game[(int)(Math.random() * game.length)]));
+									e.getJDA().getPresence().setGame(Game.of(Game.GameType.DEFAULT, game[(int)(Math.random() * (game.length-1))]));
 								}
 								
 							}
