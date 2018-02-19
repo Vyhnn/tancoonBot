@@ -109,7 +109,7 @@ public class botListener extends ListenerAdapter{
 				//egg hatching game
 				String userID_game = e.getAuthor().getId();
 				
-				JsonReader reader_game = new JsonReader(new FileReader("src/main/java///JSON/game.json"));
+				JsonReader reader_game = new JsonReader(new FileReader("src/main/java//JSON/game.json"));
 				Gson gson_game = new Gson();
 				ArrayList<Game_user> users_game = new ArrayList<Game_user>() ;
 				
@@ -451,6 +451,7 @@ public class botListener extends ListenerAdapter{
 					
 					//check command start
 					if(message[0].startsWith("v!")){
+						
 						//breeders guild only command
 						if(e.getGuild().getId().equals("221317397653487626")) {
 							//command get role
@@ -466,70 +467,8 @@ public class botListener extends ListenerAdapter{
 								}
 								
 							}
+														
 							
-							//command portfolio 
-							else if(message[0].equalsIgnoreCase("v!port")) {
-								if(e.getGuild().getId().equals("221317397653487626")){
-									if(message.length>1){
-										
-										String userid = "";
-										if(message[1].startsWith("<@")){
-											userid = message[1].substring(2, 20);
-										}
-										
-										else
-										{
-											for(int i=1;i<message.length;i++) {
-												userid += message[i];
-											}
-											
-										}
-										final String user = userid;
-										System.out.println(user);
-										//221317397653487626 PU breeder guild id
-										if(e.getGuild().getId().equals("221317397653487626")){
-											//221351400259584001 portfolio channel id
-											e.getGuild().getTextChannelById("221351400259584001").getHistory().retrievePast(100).queue((List<Message> messages) -> {
-												
-												boolean portcheck = false;
-												String port = "";
-												String bestUser = "";
-												double similarity = 0;
-												for(Message m:messages) {
-													
-													if(similarity(user,m.getAuthor().getName())>similarity){
-														similarity = similarity(user,m.getAuthor().getName());
-														bestUser = m.getAuthor().getName();
-													}
-													System.out.println("User: "+m.getAuthor().getName()+" "+similarity(user,m.getAuthor().getName()));
-													System.out.println("User: "+bestUser+" "+similarity);
-												}
-												System.out.println("BestUser: "+bestUser+" "+"similarity: "+similarity);
-												for(Message m:messages) {
-													if(similarity>=0.6&&m.getAuthor().getName().equalsIgnoreCase(bestUser)){
-														port = port + m.getContentRaw() +"\n";
-														portcheck = true;
-													}
-												}
-												if(!portcheck){
-													e.getChannel().sendMessage("Sorry, user not found.").queue();
-												}
-												else {
-													e.getChannel().sendMessage(port).queue();
-												}
-												
-											});
-											
-										}
-										
-									}
-									else {
-										e.getChannel().sendMessage("Sorry, input invalid.").queue();
-									}
-								}
-								
-								
-							}
 						}
 						if(message[0].equalsIgnoreCase("v!ping")){
 							e.getChannel().sendMessage("pong").queue();
@@ -649,6 +588,7 @@ public class botListener extends ListenerAdapter{
 									+"v!hp <hp> <atk> <def> <sp.atk> <sp.def> <speed>  - calculate hidden power\n\n"
 									+"v!nature - check the nature table\n\n"
 									+"v!eggspawn - check the egg spawn rate\n\n"
+									+"v!port <username>/<user tag> - check the portfolio of that user\n\n"
 									+"v!poke <pokemon>/<dex no.> ('abilities'/'stats'/'gender'/'egggroups'/'eggmoves'/'tms'/'moves') - check the information of that pokemon\n\n"
 									+"v!block block/unblock - block/unblock tancoon-bot from responding to your message\n\n"
 									+"v!eggmove <pokemon>/<dex no.> <eggmove> - search for possible breeding chain for eggmoves (only 1st chain is available for now)\n\n"
@@ -657,8 +597,7 @@ public class botListener extends ListenerAdapter{
 							//221332112085745670 moderator role id
 							//175984908802457600 User Vyhn id
 							if(e.getGuild().getId().equals("221317397653487626")) {
-								help = help +"v!port <username>/<user tag> - check the portfolio of that user\n\n"
-										+ "v!getrole - claim 'still hatching' role if you do not have any role\n\n";
+								help = help + "v!getrole - claim 'still hatching' role if you do not have any role\n\n";
 							}
 							if(e.getMember().getRoles().contains(e.getGuild().getRoleById("221332112085745670"))||e.getAuthor().getId().equals("175984908802457600")){
 								help = help + "v!bot <'game'>/<'status'> <game name>/<status> - change the bot's game/status, status include ('online'), ('idle'), ('dnd') and ('invisible')\n";
@@ -681,6 +620,98 @@ public class botListener extends ListenerAdapter{
 							}
 						}
 						
+						//command portfolio 
+						else if(message[0].equalsIgnoreCase("v!port")) {
+							if(message.length>1){
+								
+								String userid = "";
+								if(message[1].startsWith("<@")){
+									userid = message[1].substring(2, 20);
+								}
+								
+								else
+								{
+									for(int i=1;i<message.length;i++) {
+										userid += message[i];
+									}
+									
+								}
+								final String user = userid;
+								System.out.println(user);
+
+								//221317397653487626 PU breeder guild id
+								//221351400259584001 portfolio channel id
+								e.getJDA().getGuildById("221317397653487626").getTextChannelById("221351400259584001").getHistory().retrievePast(100).queue((List<Message> messages) -> {
+									
+									boolean portcheck = false;
+									String port = "**Breeders Guild**\n\n";
+									String bestUser = "";
+									double similarity = 0;
+									for(Message m:messages) {
+										
+										if(similarity(user,m.getAuthor().getName())>similarity){
+											similarity = similarity(user,m.getAuthor().getName());
+											bestUser = m.getAuthor().getName();
+										}
+										System.out.println("User: "+m.getAuthor().getName()+" "+similarity(user,m.getAuthor().getName()));
+										System.out.println("User: "+bestUser+" "+similarity);
+									}
+									System.out.println("BestUser: "+bestUser+" "+"similarity: "+similarity);
+									for(Message m:messages) {
+										if(similarity>=0.6&&m.getAuthor().getName().equalsIgnoreCase(bestUser)){
+											port = port + m.getContentRaw() +"\n";
+											portcheck = true;
+										}
+									}
+									if(!portcheck){
+										e.getChannel().sendMessage("Sorry, user not found in Breeders Guild.").queue();
+									}
+									else {
+										e.getChannel().sendMessage(port).queue();
+									}
+									
+								});
+								e.getJDA().getGuildById("232329466825670657").getTextChannelById("322913516845531140").getHistory().retrievePast(100).queue((List<Message> messages) -> {
+									
+									boolean portcheck = false;
+									String port = "**Uranium en español**\n\n";
+									String bestUser = "";
+									double similarity = 0;
+									for(Message m:messages) {
+										
+										if(similarity(user,m.getAuthor().getName())>similarity){
+											similarity = similarity(user,m.getAuthor().getName());
+											bestUser = m.getAuthor().getName();
+										}
+										System.out.println("User: "+m.getAuthor().getName()+" "+similarity(user,m.getAuthor().getName()));
+										System.out.println("User: "+bestUser+" "+similarity);
+									}
+									System.out.println("BestUser: "+bestUser+" "+"similarity: "+similarity);
+									for(Message m:messages) {
+										if(similarity>=0.6&&m.getAuthor().getName().equalsIgnoreCase(bestUser)){
+											port = port + m.getContentRaw() +"\n";
+											portcheck = true;
+										}
+									}
+									if(!portcheck){
+										e.getChannel().sendMessage("Sorry, user not found in Spanish Server.").queue();
+									}
+									else {
+										e.getChannel().sendMessage(port).queue();
+									}
+									
+								});
+									
+								
+								
+							}
+							else {
+								e.getChannel().sendMessage("Sorry, input invalid.").queue();
+							}
+							
+							
+							
+						}
 						
 						//command music
 						else if(message[0].equalsIgnoreCase("v!music")) {
@@ -1350,10 +1381,11 @@ public class botListener extends ListenerAdapter{
 								}
 							}							
 						}
-						
 						else{
 							e.getChannel().sendMessage("Sorry, command invalid. Please check v!help for list of commands").queue();
 						}
+						
+						
 					}
 				}
 				else {
