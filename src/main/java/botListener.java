@@ -50,6 +50,7 @@ import net.dv8tion.jda.core.managers.AudioManager;
 
 public class botListener extends ListenerAdapter{
 
+	private static final String[] game = new String[]{ "TANCOON", "with Aiden", "Pokemon Uranium", "hide and seek"};
 	final int SHINYRATE = 20;
 	final int STEPCOUNT = 50;
 	String[] Tancoons = new String[] {"tancoon", "tanscure", "tansheen"};
@@ -592,7 +593,8 @@ public class botListener extends ListenerAdapter{
 									+"v!poke <pokemon>/<dex no.> ('abilities'/'stats'/'gender'/'egggroups'/'eggmoves'/'tms'/'moves') - check the information of that pokemon\n\n"
 									+"v!block block/unblock - block/unblock tancoon-bot from responding to your message\n\n"
 									+"v!eggmove <pokemon>/<dex no.> <eggmove> - search for possible breeding chain for eggmoves (only 1st chain is available for now)\n\n"
-									+"v!music <play> <url>/<skip>/<stop>/<volume> <1-50> - listen to music\n\n";
+									+"v!music <play> <url>/<skip>/<stop>/<volume> <1-50> - listen to music\n\n"
+									+"v!game <start>/<stat> - start haching in Discord!";
 									
 							//221332112085745670 moderator role id
 							//175984908802457600 User Vyhn id
@@ -626,7 +628,7 @@ public class botListener extends ListenerAdapter{
 								
 								String userid = "";
 								if(message[1].startsWith("<@")){
-									userid = message[1].substring(2, 20);
+									userid = e.getGuild().getMemberById(message[1].replaceAll("[^0-9]","")).getUser().getName();
 								}
 								
 								else
@@ -721,6 +723,8 @@ public class botListener extends ListenerAdapter{
 							else if(message[1].equals("stop")&&message.length==2){
 								if(e.getGuild().getAudioManager().isConnected()){
 									e.getGuild().getAudioManager().closeAudioConnection();
+									
+									e.getJDA().getPresence().setGame(Game.of(Game.GameType.DEFAULT, game[(int)(Math.random() * game.length)]));
 								}
 								
 							}
@@ -1325,7 +1329,6 @@ public class botListener extends ListenerAdapter{
 								String userid = "";
 								if(message[1].startsWith("<@")){
 									userid = message[1].replaceAll("[^0-9]","");
-									System.out.println(userid);
 									
 									if(userid.equals("175984908802457600")){
 										userid=e.getAuthor().getId();
