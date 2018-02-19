@@ -85,7 +85,7 @@ public class botListener extends ListenerAdapter{
 						if(m.getContentRaw().startsWith(user)){
 							MessageBuilder messageb = new MessageBuilder().append(" ");
 							
-							File f = new File("img/nope.gif");
+							File f = new File("src/main/java//img/nope.gif");
 							Message message = messageb.build();
 							e.getGuild().getTextChannelById("221317397653487626").sendFile(f, "nope.gif", message).queue();
 						}
@@ -109,7 +109,7 @@ public class botListener extends ListenerAdapter{
 				//egg hatching game
 				String userID_game = e.getAuthor().getId();
 				
-				JsonReader reader_game = new JsonReader(new FileReader("JSON/game.json"));
+				JsonReader reader_game = new JsonReader(new FileReader("src/main/java///JSON/game.json"));
 				Gson gson_game = new Gson();
 				ArrayList<Game_user> users_game = new ArrayList<Game_user>() ;
 				
@@ -155,7 +155,7 @@ public class botListener extends ListenerAdapter{
 						}
 					}
 					
-					try (Writer writer_game = new FileWriter("JSON//game.json")) {
+					try (Writer writer_game = new FileWriter("src/main/java//JSON//game.json")) {
 					    Gson wgson_game = new GsonBuilder().create();
 					    wgson_game.toJson(users_game, writer_game);
 					  
@@ -198,7 +198,7 @@ public class botListener extends ListenerAdapter{
 				}*/
 					
 				boolean checkblock = false;
-				JsonReader checkreader = new JsonReader(new FileReader("JSON/tancoonBlock.json"));
+				JsonReader checkreader = new JsonReader(new FileReader("src/main/java//JSON/tancoonBlock.json"));
 				Gson checkgson = new Gson();
 				ArrayList<String> blockList = new ArrayList<String>() ;
 				
@@ -281,7 +281,7 @@ public class botListener extends ListenerAdapter{
 								
 								String userID = e.getAuthor().getId();
 								
-								JsonReader reader_bot = new JsonReader(new FileReader("JSON/botCount.json"));
+								JsonReader reader_bot = new JsonReader(new FileReader("src/main/java//JSON/botCount.json"));
 								Gson gson_bot = new Gson();
 								Map<String, String> botCount = gson_bot.fromJson(reader_bot, new TypeToken<Map<String, String>>(){}.getType());
 								
@@ -295,7 +295,7 @@ public class botListener extends ListenerAdapter{
 									botCount.put(userID, "1");
 								}
 								
-								try (Writer writer_bot = new FileWriter("JSON//botCount.json")) {
+								try (Writer writer_bot = new FileWriter("src/main/java//JSON//botCount.json")) {
 								    Gson wgson_bot = new GsonBuilder().create();
 								    wgson_bot.toJson(botCount, writer_bot);
 								  
@@ -553,7 +553,7 @@ public class botListener extends ListenerAdapter{
 						else if(message[0].equalsIgnoreCase("v!yousawnothing")) {
 							MessageBuilder messageb = new MessageBuilder().append(" ");
 							
-							File f = new File("img/yousawnothing.png");
+							File f = new File("src/main/java//img/yousawnothing.png");
 							Message m = messageb.build();
 							System.out.println(messageb.build().getContentDisplay());
 							System.out.println(f);
@@ -566,7 +566,7 @@ public class botListener extends ListenerAdapter{
 						else if(message[0].equalsIgnoreCase("v!anarchy")) {
 							MessageBuilder messageb = new MessageBuilder().append(" ");
 							
-							File f = new File("img/anarchy.PNG");
+							File f = new File("src/main/java//img/anarchy.PNG");
 							Message m = messageb.build();
 							System.out.println(messageb.build().getContentDisplay());
 							System.out.println(f);
@@ -579,7 +579,7 @@ public class botListener extends ListenerAdapter{
 							System.out.print("tancoon");
 							MessageBuilder messageb = new MessageBuilder().append(" ");
 							
-							File f = new File("img/tancoon_"+(int )(Math.random() * 6 + 1)+".png");
+							File f = new File("src/main/java//img/tancoon_"+(int )(Math.random() * 6 + 1)+".png");
 							Message m = messageb.build();
 							e.getChannel().sendFile(f, "Tancoon.png", m).queue();
 						}
@@ -805,7 +805,7 @@ public class botListener extends ListenerAdapter{
 							if(message.length==1){
 								MessageBuilder messageb = new MessageBuilder().append(" ");
 								
-								File f = new File("img/hp.png");
+								File f = new File("src/main/java//img/hp.png");
 								Message m = messageb.build();
 								System.out.println(messageb.build().getContentDisplay());
 								System.out.println(f);
@@ -907,7 +907,7 @@ public class botListener extends ListenerAdapter{
 						else if(message[0].equalsIgnoreCase("v!nature")) {
 							MessageBuilder messageb = new MessageBuilder().append(" ");
 							
-							File f = new File("img/nature.png");
+							File f = new File("src/main/java//img/nature.png");
 							Message m = messageb.build();
 							e.getChannel().sendFile(f, "nature.png", m).queue();
 						
@@ -918,7 +918,7 @@ public class botListener extends ListenerAdapter{
 						else if(message[0].equalsIgnoreCase("v!eggspawn")) {
 							MessageBuilder messageb = new MessageBuilder().append("Every 256 steps the game rolls a number to check it it should spawn an egg. The chances of this can be determined by what the daycare man says.");
 							
-							File f = new File("img/eggspawn.png");
+							File f = new File("src/main/java//img/eggspawn.png");
 							Message m = messageb.build();
 							e.getChannel().sendFile(f, "eggspawn.png", m).queue();
 						
@@ -1122,7 +1122,7 @@ public class botListener extends ListenerAdapter{
 							if(message.length==2&&message[1].equals("start")){
 								String userID = e.getMember().getUser().getId();
 								
-								JsonReader reader = new JsonReader(new FileReader("JSON/game.json"));
+								JsonReader reader = new JsonReader(new FileReader("src/main/java//JSON/game.json"));
 								Gson gson = new Gson();
 								ArrayList<Game_user> users = new ArrayList<Game_user>() ;
 								
@@ -1138,7 +1138,7 @@ public class botListener extends ListenerAdapter{
 									addUser(users, new_user);
 								}
 								
-								JsonReader newreader = new JsonReader(new FileReader("JSON/game.json"));
+								JsonReader newreader = new JsonReader(new FileReader("src/main/java//JSON/game.json"));
 								Gson newgson = new Gson();
 								ArrayList<Game_user> newusers = new ArrayList<Game_user>() ;
 								
@@ -1155,7 +1155,7 @@ public class botListener extends ListenerAdapter{
 							}
 							else if (message.length==2&&message[1].equals("stat")){
 								String userID = e.getAuthor().getId();
-								JsonReader newreader = new JsonReader(new FileReader("JSON/game.json"));
+								JsonReader newreader = new JsonReader(new FileReader("src/main/java//JSON/game.json"));
 								Gson newgson = new Gson();
 								ArrayList<Game_user> newusers = new ArrayList<Game_user>() ;
 								
@@ -1175,7 +1175,7 @@ public class botListener extends ListenerAdapter{
 							if(message.length==2&&message[1].equals("block")){
 								String userID = e.getMember().getUser().getId();
 								
-								JsonReader reader = new JsonReader(new FileReader("JSON/tancoonBlock.json"));
+								JsonReader reader = new JsonReader(new FileReader("src/main/java//JSON/tancoonBlock.json"));
 								Gson gson = new Gson();
 								ArrayList<String> users = new ArrayList<String>() ;
 								
@@ -1196,7 +1196,7 @@ public class botListener extends ListenerAdapter{
 										users = new ArrayList<String>() ;
 									}
 									users.add(userID);
-									try (Writer writer = new FileWriter("JSON//tancoonBlock.json")) {
+									try (Writer writer = new FileWriter("src/main/java//JSON//tancoonBlock.json")) {
 									    Gson wgson = new GsonBuilder().create();
 									    wgson.toJson(users, writer);
 									}
@@ -1206,7 +1206,7 @@ public class botListener extends ListenerAdapter{
 							else if(message.length==2&&message[1].equals("unblock")){
 								String userID = e.getMember().getUser().getId();
 								
-								JsonReader reader = new JsonReader(new FileReader("JSON/tancoonBlock.json"));
+								JsonReader reader = new JsonReader(new FileReader("src/main/java//JSON/tancoonBlock.json"));
 								Gson gson = new Gson();
 								ArrayList<String> users = new ArrayList<String>() ;
 								
@@ -1218,7 +1218,7 @@ public class botListener extends ListenerAdapter{
 										if(u.equals(userID)){
 											blockcheck = true;
 											users.remove(u);
-											try (Writer writer = new FileWriter("JSON//tancoonBlock.json")) {
+											try (Writer writer = new FileWriter("src/main/java//JSON//tancoonBlock.json")) {
 											    Gson wgson = new GsonBuilder().create();
 											    wgson.toJson(users, writer);
 											}
@@ -1237,7 +1237,7 @@ public class botListener extends ListenerAdapter{
 							if(message.length==2&&message[1].equals("start")){
 								String userID = e.getAuthor().getId();
 								
-								JsonReader reader = new JsonReader(new FileReader("JSON/hunt.json"));
+								JsonReader reader = new JsonReader(new FileReader("src/main/java//JSON/hunt.json"));
 								Gson gson = new Gson();
 								ArrayList<Hunt_user> users = new ArrayList<Hunt_user>() ;
 								
@@ -1263,7 +1263,7 @@ public class botListener extends ListenerAdapter{
 									addHuntUser(users, new_user);
 								}
 								
-								JsonReader newreader = new JsonReader(new FileReader("JSON/hunt.json"));
+								JsonReader newreader = new JsonReader(new FileReader("src/main/java//JSON/hunt.json"));
 								Gson newgson = new Gson();
 								ArrayList<Hunt_user> newusers = new ArrayList<Hunt_user>() ;
 								
@@ -1450,7 +1450,7 @@ public class botListener extends ListenerAdapter{
 							if(message.length==2&&message[1].equals("start")){
 								String userID = e.getAuthor().getId();
 								
-								JsonReader reader = new JsonReader(new FileReader("JSON/hunt.json"));
+								JsonReader reader = new JsonReader(new FileReader("src/main/java//JSON/hunt.json"));
 								Gson gson = new Gson();
 								ArrayList<Hunt_user> users = new ArrayList<Hunt_user>() ;
 								
@@ -1476,7 +1476,7 @@ public class botListener extends ListenerAdapter{
 									addHuntUser(users, new_user);
 								}
 								
-								JsonReader newreader = new JsonReader(new FileReader("JSON/hunt.json"));
+								JsonReader newreader = new JsonReader(new FileReader("src/main/java//JSON/hunt.json"));
 								Gson newgson = new Gson();
 								ArrayList<Hunt_user> newusers = new ArrayList<Hunt_user>() ;
 								
@@ -1512,7 +1512,7 @@ public class botListener extends ListenerAdapter{
 							}
 							else if(message.length>=3&&message[1].equals("add")){
 								if(e.getAuthor().getId().equals("175984908802457600")){
-									JsonReader qreader = new JsonReader(new FileReader("JSON/question.json"));
+									JsonReader qreader = new JsonReader(new FileReader("src/main/java//JSON/question.json"));
 									Gson qgson = new Gson();
 									ArrayList<String> questions = new ArrayList<String>() ;
 														
@@ -1525,7 +1525,7 @@ public class botListener extends ListenerAdapter{
 									final String fquestion = question;
 									questions.add(question);
 									
-									try (Writer qwriter = new FileWriter("JSON//question.json")) {
+									try (Writer qwriter = new FileWriter("src/main/java//JSON//question.json")) {
 									    Gson wgson = new GsonBuilder().create();
 									    wgson.toJson(questions, qwriter);
 									}
@@ -1563,7 +1563,7 @@ public class botListener extends ListenerAdapter{
 							else if(message.length==3&&message[1].equals("remove")){
 								if(e.getAuthor().getId().equals("175984908802457600")){
 									if(isStringInt(message[2])){
-										JsonReader qreader = new JsonReader(new FileReader("JSON/question.json"));
+										JsonReader qreader = new JsonReader(new FileReader("src/main/java//JSON/question.json"));
 										Gson qgson = new Gson();
 										ArrayList<String> questions = new ArrayList<String>() ;
 															
@@ -1573,7 +1573,7 @@ public class botListener extends ListenerAdapter{
 											final String fquestion = questions.get(Integer.parseInt(message[2])-1);
 											questions.remove(Integer.parseInt(message[2])-1);
 											
-											try (Writer qwriter = new FileWriter("JSON//question.json")) {
+											try (Writer qwriter = new FileWriter("src/main/java//JSON//question.json")) {
 											    Gson wgson = new GsonBuilder().create();
 											    wgson.toJson(questions, qwriter);
 											}
@@ -1629,7 +1629,7 @@ public class botListener extends ListenerAdapter{
 							}
 							else if(message.length==2&&message[1].equals("question")){
 								
-								JsonReader qreader = new JsonReader(new FileReader("JSON/question.json"));
+								JsonReader qreader = new JsonReader(new FileReader("src/main/java//JSON/question.json"));
 								Gson qgson = new Gson();
 								ArrayList<String> questions = new ArrayList<String>() ;
 								
@@ -1658,7 +1658,7 @@ public class botListener extends ListenerAdapter{
 								}							
 							}
 							else if(message.length==2&&message[1].equals("answer")){
-								JsonReader qreader = new JsonReader(new FileReader("JSON/question.json"));
+								JsonReader qreader = new JsonReader(new FileReader("src/main/java//JSON/question.json"));
 								Gson qgson = new Gson();
 								ArrayList<String> questions = new ArrayList<String>() ;
 								
@@ -1666,7 +1666,7 @@ public class botListener extends ListenerAdapter{
 								
 								String userID = e.getAuthor().getId();
 								
-								JsonReader reader = new JsonReader(new FileReader("JSON/hunt.json"));
+								JsonReader reader = new JsonReader(new FileReader("src/main/java//JSON/hunt.json"));
 								Gson gson = new Gson();
 								ArrayList<Hunt_user> users = new ArrayList<Hunt_user>() ;
 								
@@ -1720,7 +1720,7 @@ public class botListener extends ListenerAdapter{
 							else if(message.length>=3){
 								if(isStringInt(message[1]))
 								{
-									JsonReader qreader = new JsonReader(new FileReader("JSON/question.json"));
+									JsonReader qreader = new JsonReader(new FileReader("src/main/java//JSON/question.json"));
 									Gson qgson = new Gson();
 									ArrayList<String> questions = new ArrayList<String>() ;
 									
@@ -1728,7 +1728,7 @@ public class botListener extends ListenerAdapter{
 									
 									String userID = e.getAuthor().getId();
 									
-									JsonReader reader = new JsonReader(new FileReader("JSON/hunt.json"));
+									JsonReader reader = new JsonReader(new FileReader("src/main/java//JSON/hunt.json"));
 									Gson gson = new Gson();
 									ArrayList<Hunt_user> users = new ArrayList<Hunt_user>() ;
 									
@@ -1798,7 +1798,7 @@ public class botListener extends ListenerAdapter{
 											newusers.add(user);
 										}
 										
-										try (Writer writer = new FileWriter("JSON//hunt.json")) {
+										try (Writer writer = new FileWriter("src/main/java//JSON//hunt.json")) {
 										    Gson wgson = new GsonBuilder().create();
 										    wgson.toJson(users, writer);
 										}
@@ -1935,7 +1935,7 @@ public class botListener extends ListenerAdapter{
 		boolean pokecheck = false;
 		String pokename = "";
 		
-		JsonReader reader = new JsonReader(new FileReader("JSON/pokemon.json"));
+		JsonReader reader = new JsonReader(new FileReader("src/main/java//JSON/pokemon.json"));
 		Gson gson = new Gson();
 		ArrayList<pokemon> pokemons = new ArrayList<pokemon>();
 		pokemons = gson.fromJson(reader, new TypeToken<List<pokemon>>(){}.getType());
@@ -1956,7 +1956,7 @@ public class botListener extends ListenerAdapter{
 
 		users.add(user);
 		
-		try (Writer writer = new FileWriter("JSON//game.json")) {
+		try (Writer writer = new FileWriter("src/main/java//JSON//game.json")) {
 		    Gson wgson = new GsonBuilder().create();
 		    wgson.toJson(users, writer);
 		}
@@ -1968,7 +1968,7 @@ public class botListener extends ListenerAdapter{
 
 		users.add(user);
 		
-		try (Writer writer = new FileWriter("JSON//hunt.json")) {
+		try (Writer writer = new FileWriter("src/main/java//JSON//hunt.json")) {
 		    Gson wgson = new GsonBuilder().create();
 		    wgson.toJson(users, writer);
 		}
@@ -2038,7 +2038,7 @@ public class botListener extends ListenerAdapter{
 	}
 	
 	private boolean checkpoke(String poke) throws FileNotFoundException{
-		JsonReader reader = new JsonReader(new FileReader("JSON/pokemon.json"));
+		JsonReader reader = new JsonReader(new FileReader("src/main/java//JSON/pokemon.json"));
 		Gson gson = new Gson();
 		ArrayList<pokemon> pokemons = new ArrayList<pokemon>() ;
 		pokemons = gson.fromJson(reader, new TypeToken<List<pokemon>>(){}.getType());
@@ -2053,7 +2053,7 @@ public class botListener extends ListenerAdapter{
 	}
 	
 	private boolean checkeggmove(String poke, String eggmove) throws FileNotFoundException{
-		JsonReader reader = new JsonReader(new FileReader("JSON/pokemon.json"));
+		JsonReader reader = new JsonReader(new FileReader("src/main/java//JSON/pokemon.json"));
 		Gson gson = new Gson();
 		ArrayList<pokemon> pokemons = new ArrayList<pokemon>() ;
 		pokemons = gson.fromJson(reader, new TypeToken<List<pokemon>>(){}.getType());
@@ -2133,7 +2133,7 @@ public class botListener extends ListenerAdapter{
 	private Map<String, ArrayList<String>> searcheggmove(pokemon opoke, String eggmove, Map<String, ArrayList<String>> chain) throws FileNotFoundException {
 		
 	
-		JsonReader reader = new JsonReader(new FileReader("JSON/pokemon.json"));
+		JsonReader reader = new JsonReader(new FileReader("src/main/java//JSON/pokemon.json"));
 		Gson gson = new Gson();
 		ArrayList<pokemon> pokemons = new ArrayList<pokemon>() ;
 		pokemons = gson.fromJson(reader, new TypeToken<List<pokemon>>(){}.getType());
@@ -2302,7 +2302,7 @@ public class botListener extends ListenerAdapter{
 	}
 	
 	private pokemon convertpokestring(String s) throws FileNotFoundException{
-		JsonReader reader = new JsonReader(new FileReader("JSON/pokemon.json"));
+		JsonReader reader = new JsonReader(new FileReader("src/main/java//JSON/pokemon.json"));
 		Gson gson = new Gson();
 		ArrayList<pokemon> pokemons = new ArrayList<pokemon>() ;
 		pokemons = gson.fromJson(reader, new TypeToken<List<pokemon>>(){}.getType());
@@ -2316,7 +2316,7 @@ public class botListener extends ListenerAdapter{
 	}
 	
 	private String convertpokenum(String poke) throws FileNotFoundException {
-		JsonReader reader = new JsonReader(new FileReader("JSON/pokemon.json"));
+		JsonReader reader = new JsonReader(new FileReader("src/main/java//JSON/pokemon.json"));
 		Gson gson = new Gson();
 		ArrayList<pokemon> pokemons = new ArrayList<pokemon>() ;
 		pokemons = gson.fromJson(reader, new TypeToken<List<pokemon>>(){}.getType());
@@ -2398,7 +2398,7 @@ public class botListener extends ListenerAdapter{
 	}
 	
 	private String generateText(String p, String type) throws FileNotFoundException{
-		JsonReader reader = new JsonReader(new FileReader("JSON/pokemon.json"));
+		JsonReader reader = new JsonReader(new FileReader("src/main/java//JSON/pokemon.json"));
 		Gson gson = new Gson();
 		ArrayList<pokemon> pokemons = new ArrayList<pokemon>();
 		pokemons = gson.fromJson(reader, new TypeToken<List<pokemon>>(){}.getType());
@@ -2741,7 +2741,7 @@ public class botListener extends ListenerAdapter{
 	  }
 	  
 	private String guessName(String c) throws FileNotFoundException{
-		JsonReader reader = new JsonReader(new FileReader("JSON/pokemon.json"));
+		JsonReader reader = new JsonReader(new FileReader("src/main/java//JSON/pokemon.json"));
 		Gson gson = new Gson();
 		ArrayList<pokemon> pokemons = new ArrayList<pokemon>();
 		pokemons = gson.fromJson(reader, new TypeToken<List<pokemon>>(){}.getType());
