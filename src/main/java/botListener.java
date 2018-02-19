@@ -764,7 +764,7 @@ public class botListener extends ListenerAdapter{
 									changeVolume(Integer.parseInt(message[2]),e.getTextChannel());
 								}
 							}
-							else if(message[1].equals("random")&&message.length==2) {
+							/*else if(message[1].equals("random")&&message.length==2) {
 								AudioManager audioManager = e.getGuild().getAudioManager();
 								
 								//audioManager.openAudioConnection(e.getGuild().getVoiceChannelById("249187735011590145"));
@@ -789,7 +789,7 @@ public class botListener extends ListenerAdapter{
 								System.out.println(track);
 								
 								loadAndPlay(e.getTextChannel(), track);
-							}
+							}*/
 							else if(message[1].equals("pause")&&message.length==2){
 								GuildMusicManager musicManager = getGuildAudioPlayer(e.getGuild());
 								if(musicManager.player.isPaused()){
