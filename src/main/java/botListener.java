@@ -626,10 +626,9 @@ public class botListener extends ListenerAdapter{
 							if(message.length>1){
 								
 								String userid = "";
-								if(message[1].startsWith("<@")){
-									userid = e.getGuild().getMemberById(message[1].replaceAll("[^0-9]","")).getUser().getName();
-								}
-								
+								if(!e.getMessage().getMentionedUsers().isEmpty()){
+									userid = e.getMessage().getMentionedUsers().get(0).getName();
+								}							
 								else
 								{
 									for(int i=1;i<message.length;i++) {
@@ -638,7 +637,6 @@ public class botListener extends ListenerAdapter{
 									
 								}
 								final String user = userid;
-								System.out.println(user);
 
 								//221317397653487626 PU breeder guild id
 								//221351400259584001 portfolio channel id
@@ -654,10 +652,7 @@ public class botListener extends ListenerAdapter{
 											similarity = similarity(user,m.getAuthor().getName());
 											bestUser = m.getAuthor().getName();
 										}
-										System.out.println("User: "+m.getAuthor().getName()+" "+similarity(user,m.getAuthor().getName()));
-										System.out.println("User: "+bestUser+" "+similarity);
 									}
-									System.out.println("BestUser: "+bestUser+" "+"similarity: "+similarity);
 									for(Message m:messages) {
 										if(similarity>=0.6&&m.getAuthor().getName().equalsIgnoreCase(bestUser)){
 											port = port + m.getContentRaw() +"\n";
@@ -686,10 +681,7 @@ public class botListener extends ListenerAdapter{
 											similarity = similarity(user,m.getAuthor().getName());
 											bestUser = m.getAuthor().getName();
 										}
-										System.out.println("User: "+m.getAuthor().getName()+" "+similarity(user,m.getAuthor().getName()));
-										System.out.println("User: "+bestUser+" "+similarity);
 									}
-									System.out.println("BestUser: "+bestUser+" "+"similarity: "+similarity);
 									for(Message m:messages) {
 										if(similarity>=0.6&&m.getAuthor().getName().equalsIgnoreCase(bestUser)&&!m.getId().equals("322929388012306432")&&!m.getId().equals("322931101230170112")){
 											port = port + m.getContentRaw() +"\n";
