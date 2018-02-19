@@ -673,6 +673,8 @@ public class botListener extends ListenerAdapter{
 									}
 									
 								});
+								
+								//spanish server
 								e.getJDA().getGuildById("232329466825670657").getTextChannelById("322913516845531140").getHistory().retrievePast(100).queue((List<Message> messages) -> {
 									
 									boolean portcheck = false;
@@ -690,7 +692,7 @@ public class botListener extends ListenerAdapter{
 									}
 									System.out.println("BestUser: "+bestUser+" "+"similarity: "+similarity);
 									for(Message m:messages) {
-										if(similarity>=0.6&&m.getAuthor().getName().equalsIgnoreCase(bestUser)){
+										if(similarity>=0.6&&m.getAuthor().getName().equalsIgnoreCase(bestUser)&&!m.getId().equals("322929388012306432")&&!m.getId().equals("322931101230170112")){
 											port = port + m.getContentRaw() +"\n";
 											portcheck = true;
 										}
