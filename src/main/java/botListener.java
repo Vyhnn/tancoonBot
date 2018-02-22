@@ -1210,8 +1210,10 @@ public class botListener extends ListenerAdapter{
 									String addpoke = message[3];
 									String userID = e.getAuthor().getId();
 									
-									if(message[4].equalsIgnoreCase("shiny")){
-										addpoke+="(Shiny)";
+									if(message.length==5){
+										if(message[4].equalsIgnoreCase("shiny")){
+											addpoke+="(Shiny)";
+										}
 									}
 
 									Game_user gameUser = getGameUser(userID);
