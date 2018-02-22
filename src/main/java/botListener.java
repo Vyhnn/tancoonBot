@@ -578,7 +578,7 @@ public class botListener extends ListenerAdapter{
 									+"v!block block/unblock - block/unblock tancoon-bot from responding to your message\n\n"
 									+"v!eggmove <pokemon>/<dex no.> <eggmove> - search for possible breeding chain for eggmoves (only 1st chain is available for now)\n\n"
 									+"v!music <play> <url>/<skip>/<stop>/<volume> <1-50> - listen to music\n\n"
-									+"v!game <start>/<stat>/<party> (add)/(remove) <pokemon> (shiny) - start haching in Discord!";
+									+"v!game <start>/<stat>/<party> (add)/(remove) <pokemon> (shiny) - start haching in Discord!\n\n";
 									
 							//221332112085745670 moderator role id
 							//175984908802457600 User Vyhn id
