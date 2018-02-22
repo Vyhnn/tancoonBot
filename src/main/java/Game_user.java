@@ -5,14 +5,16 @@ public class Game_user {
 	String userID;
 	Egg egg;
 	ArrayList<String> collection;
+	ArrayList<String> party;
 	boolean hatching = false;
 	int steps = 0;
 
 	
-	public Game_user(String userID, ArrayList<String> collection, boolean hatching, int steps, Egg egg) {
+	public Game_user(String userID, ArrayList<String> party, ArrayList<String> collection, boolean hatching, int steps, Egg egg) {
 		super();
 		this.userID = userID;
 		this.collection = collection;
+		this.party = party;
 		this.hatching = hatching;
 		this.steps = steps;
 		this.egg = egg;
@@ -32,6 +34,14 @@ public class Game_user {
 
 	public void setCollection(ArrayList<String> collection) {
 		this.collection = collection;
+	}
+	
+	public ArrayList<String> getParty() {
+		return party;
+	}
+
+	public void setParty(ArrayList<String> party) {
+		this.party = party;
 	}
 	
 	public boolean getHatching() {

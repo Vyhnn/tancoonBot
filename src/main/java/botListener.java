@@ -109,57 +109,49 @@ public class botListener extends ListenerAdapter{
 				//egg hatching game
 				String userID_game = e.getAuthor().getId();
 				
-				JsonReader reader_game = new JsonReader(new FileReader("src/main/java//JSON/game.json"));
-				Gson gson_game = new Gson();
-				ArrayList<Game_user> users_game = new ArrayList<Game_user>() ;
-				
-				users_game = gson_game.fromJson(reader_game, new TypeToken<List<Game_user>>(){}.getType());
-				
-				if(checkUser(users_game, userID_game)){
+				Game_user gameuser = getGameUser(userID_game);				
+				if(gameuser!=null){
 					
-					for(Game_user u:users_game){
-						if(u.getUserID().equals(userID_game)){
-							u.setSteps((int) (u.getSteps()+Math.random()*STEPCOUNT+1));
-							if(u.getSteps()>=u.getEgg().getSteps()) {
-								if(e.getGuild().getId().equals("221317397653487626")){
-									e.getGuild().getTextChannelById("223126199784701952").sendMessage("Huh?").queue();
-									
-									if(u.getEgg().getShiny()){
-										e.getChannel().sendMessage(e.getAuthor().getName() + ", " + u.getEgg().getPokemon() + "(Shiny) just hatched from the egg!").queueAfter(3, TimeUnit.SECONDS);
-										u.getCollection().add(u.getEgg().getPokemon()+"(Shiny)");
-									}
-									else {
-										e.getChannel().sendMessage(e.getAuthor().getName() + ", " + u.getEgg().getPokemon() + " just hatched from the egg!").queueAfter(3, TimeUnit.SECONDS);
-										u.getCollection().add(u.getEgg().getPokemon());
-									}
-									u.setSteps(0);
-									u.setEgg(generateEgg());
+					
+						if(checkFlamebody(gameuser.getParty())){
+							gameuser.setSteps((int) (gameuser.getSteps()+Math.random()*STEPCOUNT+2));
+						}
+						else {
+							gameuser.setSteps((int) (gameuser.getSteps()+Math.random()*STEPCOUNT+1));
+						}
+						
+						if(gameuser.getSteps()>=gameuser.getEgg().getSteps()) {
+							if(e.getGuild().getId().equals("221317397653487626")){
+								e.getGuild().getTextChannelById("223126199784701952").sendMessage("Huh?").queue();
+								
+								if(gameuser.getEgg().getShiny()){
+									e.getGuild().getTextChannelById("223126199784701952").sendMessage(e.getAuthor().getName() + ", " + gameuser.getEgg().getPokemon() + "(Shiny) just hatched from the egg!").queueAfter(3, TimeUnit.SECONDS);
+									gameuser.getCollection().add(gameuser.getEgg().getPokemon()+"(Shiny)");
 								}
 								else {
-									e.getChannel().sendMessage("Huh?").queue();
-									
-									if(u.getEgg().getShiny()){
-										e.getChannel().sendMessage(e.getAuthor().getName() + ", " + u.getEgg().getPokemon() + "(Shiny) just hatched from the egg!").queueAfter(3, TimeUnit.SECONDS);
-										u.getCollection().add(u.getEgg().getPokemon()+"(Shiny)");
-									}
-									else {
-										e.getChannel().sendMessage(e.getAuthor().getName() + ", " + u.getEgg().getPokemon() + " just hatched from the egg!").queueAfter(3, TimeUnit.SECONDS);
-										u.getCollection().add(u.getEgg().getPokemon());
-									}
-									u.setSteps(0);
-									u.setEgg(generateEgg());
+									e.getGuild().getTextChannelById("223126199784701952").sendMessage(e.getAuthor().getName() + ", " + gameuser.getEgg().getPokemon() + " just hatched from the egg!").queueAfter(3, TimeUnit.SECONDS);
+									gameuser.getCollection().add(gameuser.getEgg().getPokemon());
 								}
-								
-								
+								gameuser.setSteps(0);
+								gameuser.setEgg(generateEgg());
 							}
-						}
+							else {
+								e.getChannel().sendMessage("Huh?").queue();
+								
+								if(gameuser.getEgg().getShiny()){
+									e.getChannel().sendMessage(e.getAuthor().getName() + ", " + gameuser.getEgg().getPokemon() + "(Shiny) just hatched from the egg!").queueAfter(3, TimeUnit.SECONDS);
+									gameuser.getCollection().add(gameuser.getEgg().getPokemon()+"(Shiny)");
+								}
+								else {
+									e.getChannel().sendMessage(e.getAuthor().getName() + ", " + gameuser.getEgg().getPokemon() + " just hatched from the egg!").queueAfter(3, TimeUnit.SECONDS);
+									gameuser.getCollection().add(gameuser.getEgg().getPokemon());
+								}
+								gameuser.setSteps(0);
+								gameuser.setEgg(generateEgg());
+							}
 					}
 					
-					try (Writer writer_game = new FileWriter("src/main/java//JSON//game.json")) {
-					    Gson wgson_game = new GsonBuilder().create();
-					    wgson_game.toJson(users_game, writer_game);
-					  
-					}
+					saveGameUser(gameuser);
 				}
 				
 				//272986135372759040 Custom sprite channel ID
@@ -445,7 +437,6 @@ public class botListener extends ListenerAdapter{
 					//bot mention
 					//249187330731147264 vyhn bot id
 					if(e.getMessage().getContentRaw().equals(e.getGuild().getMemberById("249187330731147264").getAsMention())){
-						System.out.println(e.getAuthor().getAsMention()+e.getGuild().getMemberById("249187330731147264").getAsMention());
 						e.getChannel().sendMessage(e.getAuthor().getAsMention()).queue();
 					}
 					
@@ -485,7 +476,7 @@ public class botListener extends ListenerAdapter{
 
 							e.getChannel().sendMessage(embed.build()).queue();
 							*/
-							System.out.println(e.getJDA().getGuildById("221317397653487626").getRoles());
+							//System.out.println(e.getJDA().getGuildById("221317397653487626").getRoles());
 						}
 						
 						//command yousawnothing
@@ -494,8 +485,6 @@ public class botListener extends ListenerAdapter{
 							
 							File f = new File("src/main/java//img/yousawnothing.png");
 							Message m = messageb.build();
-							System.out.println(messageb.build().getContentDisplay());
-							System.out.println(f);
 							e.getChannel().sendFile(f, "yousawnothing.png", m).queue();
 						
 							
@@ -507,15 +496,12 @@ public class botListener extends ListenerAdapter{
 							
 							File f = new File("src/main/java//img/anarchy.PNG");
 							Message m = messageb.build();
-							System.out.println(messageb.build().getContentDisplay());
-							System.out.println(f);
 							e.getChannel().sendFile(f, "anarchy.png", m).queue();
 						
 							
 						}
 						
 						else if(message[0].equalsIgnoreCase("v!tancoon")||message[0].equalsIgnoreCase("v!tanscure")||message[0].equalsIgnoreCase("v!tansheen")) {
-							System.out.print("tancoon");
 							MessageBuilder messageb = new MessageBuilder().append(" ");
 							
 							File f = new File("src/main/java//img/tancoon_"+(int )(Math.random() * 6 + 1)+".png");
@@ -543,7 +529,6 @@ public class botListener extends ListenerAdapter{
 										}
 										
 										e.getJDA().getPresence().setGame(Game.of(Game.GameType.DEFAULT, game));
-										System.out.println(e.getJDA().getPresence().getGame());
 									}
 									else if(message[1].equalsIgnoreCase("status")){
 										
@@ -568,7 +553,6 @@ public class botListener extends ListenerAdapter{
 										}
 										
 										e.getJDA().getPresence().setStatus(status);
-										System.out.println(e.getJDA().getPresence().getStatus());
 									}
 									
 								}
@@ -738,7 +722,6 @@ public class botListener extends ListenerAdapter{
 								
 								AudioPlayer player = playerManager.createPlayer();
 								player.setVolume(1);
-								System.out.println(player.getVolume());
 								audioManager.setSendingHandler(new AudioPlayerSendHandler(player));
 								
 								
@@ -835,8 +818,6 @@ public class botListener extends ListenerAdapter{
 								
 								File f = new File("src/main/java//img/hp.png");
 								Message m = messageb.build();
-								System.out.println(messageb.build().getContentDisplay());
-								System.out.println(f);
 								e.getChannel().sendFile(f, "hp.png", m).queue();
 							}
 							else if(message.length==2) {
@@ -1013,7 +994,7 @@ public class botListener extends ListenerAdapter{
 								}
 								else {
 									Map<String, ArrayList<String>> chains = searcheggmove(convertpokestring(poke), eggmove, new HashMap<String, ArrayList<String>>());
-									System.out.println("Chain: "+searcheggmove(convertpokestring(poke), eggmove, new HashMap<String, ArrayList<String>>()));
+									//System.out.println("Chain: "+searcheggmove(convertpokestring(poke), eggmove, new HashMap<String, ArrayList<String>>()));
 									
 									
 									ArrayList<String> lvlmove = new ArrayList<String>();
@@ -1028,18 +1009,18 @@ public class botListener extends ListenerAdapter{
 										for(String value: list) {
 								        	  if(key.equalsIgnoreCase(poke+"(move)")){
 								        		  lvlmove.add(value.toString());
-								        		  System.out.println(key+":"+poke+"(move)");
-								        		  System.out.println("Add move");
+								        		  //System.out.println(key+":"+poke+"(move)");
+								        		  //System.out.println("Add move");
 								        	  }
 								        	  else if(key.equalsIgnoreCase(poke+"(tm)")){
 								        		  tm.add(value.toString());
-								        		  System.out.println(key+":"+poke+"(tm)");
-								        		  System.out.println("Add tm");
+								        		  //System.out.println(key+":"+poke+"(tm)");
+								        		  //System.out.println("Add tm");
 								        	  }
 								        	  else if(key.equalsIgnoreCase(poke+"(eggmove)")){
 								        		  eggmoves.add(value.toString());
-								        		  System.out.println(key+":"+poke+"(eggmove)");
-								        		  System.out.println("Add eggmove");
+								        		  //System.out.println(key+":"+poke+"(eggmove)");
+								        		  //System.out.println("Add eggmove");
 								        	  }
 								        	  /*if(key.endsWith("(eggmove)")){				        		  
 								        		  String next = value.toString();
@@ -1117,12 +1098,12 @@ public class botListener extends ListenerAdapter{
 										result += "**TMs: **\n"+TM+"\n\n";
 									}
 									if(!eggmoves.isEmpty()){
-										System.out.println(eggmoves);
+										//System.out.println(eggmoves);
 										result += "**Eggmoves: **\n"+eggmovess+"\n\n";
 									}
 									
 									if(!chainlist.isEmpty()){
-										System.out.println(chainlist);
+										//System.out.println(chainlist);
 										result += "**Chains: **\n"+chaineggmove+"\n\n";
 									}
 									
@@ -1131,7 +1112,7 @@ public class botListener extends ListenerAdapter{
 									}
 									else {
 										e.getChannel().sendMessage("**"+poke+"**\n\n"+result).queue();
-										System.out.println("**"+poke+"**\n\n"+result);
+										//System.out.println("**"+poke+"**\n\n"+result);
 									}
 									
 									
@@ -1150,50 +1131,105 @@ public class botListener extends ListenerAdapter{
 							if(message.length==2&&message[1].equals("start")){
 								String userID = e.getMember().getUser().getId();
 								
-								JsonReader reader = new JsonReader(new FileReader("src/main/java//JSON/game.json"));
-								Gson gson = new Gson();
-								ArrayList<Game_user> users = new ArrayList<Game_user>() ;
-								
-								users = gson.fromJson(reader, new TypeToken<List<Game_user>>(){}.getType());
-								
-								System.out.println(users);
-								if(checkUser(users, userID)){
+								Game_user user = getGameUser(userID);
+								if(user!=null){
 									e.getChannel().sendMessage("Your account already exist!").queue();
 								}
 								else {
-									Game_user new_user = createAccount(userID);
+									user = createAccount(userID);
 			
-									addUser(users, new_user);
+									addUser(user);
 								}
-								
-								JsonReader newreader = new JsonReader(new FileReader("src/main/java//JSON/game.json"));
-								Gson newgson = new Gson();
-								ArrayList<Game_user> newusers = new ArrayList<Game_user>() ;
-								
-								newusers = newgson.fromJson(newreader, new TypeToken<List<Game_user>>(){}.getType());
-								
-								for(Game_user user:newusers){
-									if(user.getUserID().equals(userID)){
-										e.getChannel().sendMessage("**User: **"+e.getGuild().getMemberById(user.getUserID()).getEffectiveName()+"\n**Collection: **"+user.getCollection() + "\n **Steps: **" + user.getSteps()).queue();
-									}
-								}
-								
-		
-			
+
+								e.getChannel().sendMessage("**User: **"+e.getGuild().getMemberById(user.getUserID()).getEffectiveName()+"\n**Party: **"+user.getParty() +"\n**PC: **"+user.getCollection() +"\n**Current Steps: **" + user.getSteps()).queue();
+
 							}
 							else if (message.length==2&&message[1].equals("stat")){
 								String userID = e.getAuthor().getId();
-								JsonReader newreader = new JsonReader(new FileReader("src/main/java//JSON/game.json"));
-								Gson newgson = new Gson();
-								ArrayList<Game_user> newusers = new ArrayList<Game_user>() ;
 								
-								newusers = newgson.fromJson(newreader, new TypeToken<List<Game_user>>(){}.getType());
+								Game_user gameUser = getGameUser(userID);
 								
-								for(Game_user user:newusers){
-									if(user.getUserID().equals(userID)){
-										e.getChannel().sendMessage("**User: **"+e.getGuild().getMemberById(user.getUserID()).getEffectiveName()+"\n**Collection: **"+user.getCollection() + ", **Current Steps: **" + user.getSteps()).queue();
-									}
+								if(gameUser!=null){
+									e.getChannel().sendMessage("**User: **"+e.getGuild().getMemberById(gameUser.getUserID()).getEffectiveName()+"\n**Party: **"+gameUser.getParty()+"\n**PC: **"+gameUser.getCollection() + "\n**Current Steps: **" + gameUser.getSteps()).queue();
 								}
+							}
+							
+							else if(message.length>=2&&message[1].equals("party")) {
+								if(message.length == 2) {
+									String userID = e.getAuthor().getId();
+									Game_user gameUser = getGameUser(userID);
+									
+									e.getChannel().sendMessage("**Party: **"+gameUser.getParty()).queue();
+								}
+								else if(message.length>3&&message[2].equals("add")) {
+									String addpoke = message[3];
+									String userID = e.getAuthor().getId();
+									
+									if(message[4].equalsIgnoreCase("shiny")){
+										addpoke+="(Shiny)";
+									}
+
+									Game_user gameUser = getGameUser(userID);
+
+									if(gameUser!=null){
+										List<String> toRemove = new ArrayList<>();
+										for(String poke: gameUser.getCollection()){
+											if(poke.equalsIgnoreCase(addpoke)){
+												if(gameUser.getParty().size()<6) {
+													toRemove.add(poke);
+													
+												}												
+												else {
+													e.getChannel().sendMessage("Sorry, your party is full").queue();
+												}
+												
+											}
+										}
+
+										gameUser.getCollection().remove(toRemove.get(0));
+										gameUser.getParty().add(toRemove.get(0));
+										saveGameUser(gameUser);
+										e.getChannel().sendMessage(addpoke+" is added to your party.").queue();
+
+											
+									}
+									
+									
+								}
+								else if(message.length>3&&message[2].equals("remove")) {
+									String addpoke = message[3];
+									String userID = e.getAuthor().getId();
+									
+									if(message[4].equalsIgnoreCase("shiny")){
+										addpoke+="(Shiny)";
+									}
+
+									Game_user gameUser = getGameUser(userID);
+
+									if(gameUser!=null){
+										if(gameUser.getParty().isEmpty()){
+											e.getChannel().sendMessage("Your Party is empty!").queue();
+										}
+										else {
+											List<String> toRemove = new ArrayList<>();
+											for(String poke: gameUser.getParty()){
+												if(poke.equalsIgnoreCase(addpoke)){
+													toRemove.add(poke);											
+												}
+											}
+
+											gameUser.getParty().remove(toRemove.get(0));
+											gameUser.getCollection().add(toRemove.get(0));
+											saveGameUser(gameUser);
+											e.getChannel().sendMessage(addpoke+" is removed from your party.").queue();
+
+										}
+	
+									}
+									
+									
+								}
+								
 							}
 							
 							
@@ -1318,7 +1354,6 @@ public class botListener extends ListenerAdapter{
 						else if(message[0].equalsIgnoreCase("v!ban")||message[0].equalsIgnoreCase("v!sacrifice")) {
 							
 							if(message.length>=2){
-								System.out.println(message[1]);
 								String userid = "";
 								if(message[1].startsWith("<@")){
 									userid = message[1].replaceAll("[^0-9]","");
@@ -1368,7 +1403,6 @@ public class botListener extends ListenerAdapter{
 										}
 									}
 									else {
-										System.out.println(e.getGuild().getMemberById(userid));
 										e.getChannel().sendMessage("User not found. Please try again.").queue();
 									}
 								}
@@ -1854,7 +1888,6 @@ public class botListener extends ListenerAdapter{
 						
 						//301740745990078465 Vyhn bot private channel id
 						if(e.getChannel().getId().equals("301740745990078465")){
-							System.out.println(e.getMessage().getContentRaw());
 							String[] messages = e.getMessage().getContentRaw().split(" ");
 							if(messages[0].equals("v!talk")){
 								//223126199784701952 PU breeder guild bot_spam id
@@ -1892,7 +1925,6 @@ public class botListener extends ListenerAdapter{
 						}
 						else {
 							//249187330731147264 Vyhn bot private channel id
-							System.out.println(e.getChannel().getId());
 							e.getJDA().getUserById("175984908802457600").openPrivateChannel().queue((value) ->
 						    {
 						        PrivateChannel channel = value; 
@@ -1912,22 +1944,6 @@ public class botListener extends ListenerAdapter{
 		
 	}
 	
-	private boolean checkUser(ArrayList<Game_user> users, String id) throws IOException{
-	
-		if(!users.isEmpty()){
-			for(Game_user user:users){
-				if(user.getUserID().equals(id)){
-					return true;
-					
-				}
-			}
-		}
-		
-		
-		return false;
-		
-		
-	}
 	private boolean checkHuntUser(ArrayList<Hunt_user> users, String id) throws IOException{
 	
 		
@@ -1945,8 +1961,9 @@ public class botListener extends ListenerAdapter{
 	
 	private Game_user createAccount(String id) throws FileNotFoundException{
 		ArrayList<String> mCollection = new ArrayList<String>();
+		ArrayList<String> mParty = new ArrayList<String>();
 
-		Game_user user = new Game_user(id, mCollection, false, 0, generateEgg());
+		Game_user user = new Game_user(id, mParty, mCollection, false, 0, generateEgg());
 				
 		return user;
 	}
@@ -1971,7 +1988,7 @@ public class botListener extends ListenerAdapter{
 		
 		while(!pokecheck){
 			int pokenum = 1 + (int)(Math.random() * 200);
-			if(pokemons.get(pokenum).getEvo().equals("1")&&!pokemons.get(pokenum).getEgggroup().equals("Undiscovered")&&!pokemons.get(pokenum).getEgggroup().equals("ditto")){
+			if(pokemons.get(pokenum).getEvo().equals("1")&&!pokemons.get(pokenum).getEgggroup().equalsIgnoreCase("Undiscovered")&&!pokemons.get(pokenum).getEgggroup().equalsIgnoreCase("Ditto")){
 				pokename = pokemons.get(pokenum).getName();
 				pokecheck = true;
 			}
@@ -1980,16 +1997,83 @@ public class botListener extends ListenerAdapter{
 		return pokename;
 	}
 	
-	private void addUser(ArrayList<Game_user> users, Game_user user) throws IOException{
-
-		users.add(user);
+	private Game_user getGameUser(String userid) throws IOException {
+		JsonReader gamereader = new JsonReader(new FileReader("src/main/java//JSON/game.json"));
+		Gson gamegson = new Gson();
+		ArrayList<Game_user> gameusers = new ArrayList<Game_user>() ;
 		
-		try (Writer writer = new FileWriter("src/main/java//JSON//game.json")) {
-		    Gson wgson = new GsonBuilder().create();
-		    wgson.toJson(users, writer);
+		gameusers = gamegson.fromJson(gamereader, new TypeToken<List<Game_user>>(){}.getType());
+		
+		for(Game_user user:gameusers){
+			if(user.getUserID().equals(userid)){
+				if(user.getParty()==null){
+					user.setParty(new ArrayList<String>());
+					saveGameUser(user);
+				}
+				return user;
+			}
 		}
 		
-		System.out.println(users);
+		return null;
+		
+	}
+	
+	private void saveGameUser(Game_user user) throws IOException{
+		JsonReader gamereader = new JsonReader(new FileReader("src/main/java//JSON/game.json"));
+		Gson gamegson = new Gson();
+		ArrayList<Game_user> gameusers = new ArrayList<Game_user>() ;
+		
+		gameusers = gamegson.fromJson(gamereader, new TypeToken<List<Game_user>>(){}.getType());
+		for(int i=0;i<gameusers.size();i++){
+			if(gameusers.get(i).getUserID().equals(user.getUserID())){
+				gameusers.set(i, user);
+			}
+		}
+		
+		try (Writer writer = new FileWriter("src/main/java//JSON/game.json")) {
+		    Gson wgson = new GsonBuilder().create();
+		    wgson.toJson(gameusers, writer);
+		}
+	}
+	
+	private void addUser(Game_user user) throws IOException{
+
+		JsonReader gamereader = new JsonReader(new FileReader("src/main/java//JSON/game.json"));
+		Gson gamegson = new Gson();
+		ArrayList<Game_user> gameusers = new ArrayList<Game_user>() ;
+		
+		gameusers = gamegson.fromJson(gamereader, new TypeToken<List<Game_user>>(){}.getType());
+		
+		gameusers.add(user);
+		
+		try (Writer writer = new FileWriter("src/main/java//JSON/game.json")) {
+		    Gson wgson = new GsonBuilder().create();
+		    wgson.toJson(gameusers, writer);
+		}
+		
+	}
+	
+	private boolean checkFlamebody(ArrayList<String> party) throws FileNotFoundException {
+		JsonReader reader = new JsonReader(new FileReader("src/main/java//JSON/pokemon.json"));
+		Gson gson = new Gson();
+		ArrayList<pokemon> pokemons = new ArrayList<pokemon>() ;
+		pokemons = gson.fromJson(reader, new TypeToken<List<pokemon>>(){}.getType());
+		
+		for(String poke:party){
+			for(pokemon p:pokemons){
+				if(p.getName().equalsIgnoreCase(poke)){
+					String[] abilities = p.getAbility().split(",");
+					for(String ability: abilities){
+						if(ability.equalsIgnoreCase("Flame Body")||ability.equalsIgnoreCase("Magma Armor")){
+							return true;
+						}
+					}
+				}
+			}
+		}
+		
+		
+		return false;
 	}
 	
 	private void addHuntUser(ArrayList<Hunt_user> users, Hunt_user user) throws IOException{
@@ -2000,8 +2084,6 @@ public class botListener extends ListenerAdapter{
 		    Gson wgson = new GsonBuilder().create();
 		    wgson.toJson(users, writer);
 		}
-		
-		System.out.println(users);
 	}
 	
 	private String getHp(String[] e){
@@ -2183,13 +2265,13 @@ public class botListener extends ListenerAdapter{
 		return chain;*/
 		
 		if(geteggfrommove(pokemons, opoke, eggmove).size()==0&&geteggfromtm(pokemons, opoke, eggmove).size()==0&&geteggfromeggmove(pokemons, opoke, eggmove).size()==0) {
-			System.out.println("Current: "+opoke.getName()+" (end)");
+			//System.out.println("Current: "+opoke.getName()+" (end)");
 			return chain;
 		}
 		else if(geteggfrommove(pokemons, opoke, eggmove).size()==0&&geteggfromtm(pokemons, opoke, eggmove).size()==0&&geteggfromeggmove(pokemons, opoke, eggmove).size()>0) {
 			
 			chain.put(opoke.getName()+"(eggmove)", geteggfromeggmove(pokemons, opoke, eggmove));
-			System.out.println(geteggfromeggmove(pokemons, opoke, eggmove));
+			//System.out.println(geteggfromeggmove(pokemons, opoke, eggmove));
 			for(String s: geteggfromeggmove(pokemons, opoke, eggmove)){
 				ArrayList<String> value = chain.get(s+"(eggmove)");
 				if (value == null) {
@@ -2210,12 +2292,12 @@ public class botListener extends ListenerAdapter{
 		else {
 			if(geteggfrommove(pokemons, opoke, eggmove).size()>0) {
 				chain.put(opoke.getName()+"(move)", geteggfrommove(pokemons, opoke, eggmove));
-				System.out.println("Current: "+opoke.getName()+" (add move)");
+				//System.out.println("Current: "+opoke.getName()+" (add move)");
 			}
 			
 			if(geteggfromtm(pokemons, opoke, eggmove).size()>0) {
 				chain.put(opoke.getName()+"(tm)", geteggfromtm(pokemons, opoke, eggmove));
-				System.out.println("Current: "+opoke.getName()+" (add tm)");
+				//System.out.println("Current: "+opoke.getName()+" (add tm)");
 				
 			}
 			return chain;
@@ -2309,7 +2391,7 @@ public class botListener extends ListenerAdapter{
 									for(String s:neggmove){
 										if(s.replaceAll("\\-|\\s+","").equalsIgnoreCase(eggmove.replaceAll("\\-|\\s+",""))) {
 											chain.add(npoke.getName());
-											System.out.print("add eggmove: "+npoke.getName()+chain);
+											//System.out.print("add eggmove: "+npoke.getName()+chain);
 										}
 									}
 								}
@@ -2441,7 +2523,7 @@ public class botListener extends ListenerAdapter{
 					bestPoke = pokemon.getName();
 				}
 			}
-			System.out.println("similarity: "+similarity+" poke: "+bestPoke);
+
 			if(similarity<=0.7){
 				stat = "Sorry, pokemon not found. Are you sure it is spelled correctly?\n";
 				if(!guessName(p.substring(0, 1)).equals("")){
@@ -2460,7 +2542,7 @@ public class botListener extends ListenerAdapter{
 			if(bestPoke.equalsIgnoreCase(pokemon.getName())||p.equalsIgnoreCase(pokemon.getNdex())){
 				switch(type){
 					case "poke":
-						System.out.println(pokemon.toString());
+
 						stat = "**Dex No. "+pokemon.getNdex()+"**\n"+
 								"**Name:** "+pokemon.getName()+"\n";
 						
