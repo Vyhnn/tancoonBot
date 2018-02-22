@@ -113,44 +113,45 @@ public class botListener extends ListenerAdapter{
 				if(gameuser!=null){
 					
 					
-						if(checkFlamebody(gameuser.getParty())){
-							gameuser.setSteps((int) (gameuser.getSteps()+Math.random()*STEPCOUNT+2));
-						}
-						else {
-							gameuser.setSteps((int) (gameuser.getSteps()+Math.random()*STEPCOUNT+1));
-						}
-						
-						if(gameuser.getSteps()>=gameuser.getEgg().getSteps()) {
-							if(e.getGuild().getId().equals("221317397653487626")){
-								e.getGuild().getTextChannelById("223126199784701952").sendMessage("Huh?").queue();
-								
-								if(gameuser.getEgg().getShiny()){
-									e.getGuild().getTextChannelById("223126199784701952").sendMessage(e.getAuthor().getName() + ", " + gameuser.getEgg().getPokemon() + "(Shiny) just hatched from the egg!").queueAfter(3, TimeUnit.SECONDS);
-									gameuser.getCollection().add(gameuser.getEgg().getPokemon()+"(Shiny)");
-								}
-								else {
-									e.getGuild().getTextChannelById("223126199784701952").sendMessage(e.getAuthor().getName() + ", " + gameuser.getEgg().getPokemon() + " just hatched from the egg!").queueAfter(3, TimeUnit.SECONDS);
-									gameuser.getCollection().add(gameuser.getEgg().getPokemon());
-								}
-								gameuser.setSteps(0);
-								gameuser.setEgg(generateEgg());
-							}
-							else {
-								e.getChannel().sendMessage("Huh?").queue();
-								
-								if(gameuser.getEgg().getShiny()){
-									e.getChannel().sendMessage(e.getAuthor().getName() + ", " + gameuser.getEgg().getPokemon() + "(Shiny) just hatched from the egg!").queueAfter(3, TimeUnit.SECONDS);
-									gameuser.getCollection().add(gameuser.getEgg().getPokemon()+"(Shiny)");
-								}
-								else {
-									e.getChannel().sendMessage(e.getAuthor().getName() + ", " + gameuser.getEgg().getPokemon() + " just hatched from the egg!").queueAfter(3, TimeUnit.SECONDS);
-									gameuser.getCollection().add(gameuser.getEgg().getPokemon());
-								}
-								gameuser.setSteps(0);
-								gameuser.setEgg(generateEgg());
-							}
+					if(checkFlamebody(gameuser.getParty())){
+						gameuser.setSteps((int) (gameuser.getSteps()+(Math.random()*STEPCOUNT+1)*2));
+					}
+					else {
+						gameuser.setSteps((int) (gameuser.getSteps()+Math.random()*STEPCOUNT+1));
 					}
 					
+					//hatch egg
+					if(gameuser.getSteps()>=gameuser.getEgg().getSteps()) {
+						if(e.getGuild().getId().equals("221317397653487626")){
+							e.getGuild().getTextChannelById("223126199784701952").sendMessage("Huh?").queue();
+							
+							if(gameuser.getEgg().getShiny()){
+								e.getGuild().getTextChannelById("223126199784701952").sendMessage(e.getAuthor().getName() + ", " + gameuser.getEgg().getPokemon() + "(Shiny) just hatched from the egg!").queueAfter(3, TimeUnit.SECONDS);
+								gameuser.getCollection().add(gameuser.getEgg().getPokemon()+"(Shiny)");
+							}
+							else {
+								e.getGuild().getTextChannelById("223126199784701952").sendMessage(e.getAuthor().getName() + ", " + gameuser.getEgg().getPokemon() + " just hatched from the egg!").queueAfter(3, TimeUnit.SECONDS);
+								gameuser.getCollection().add(gameuser.getEgg().getPokemon());
+							}
+							gameuser.setSteps(0);
+							gameuser.setEgg(generateEgg());
+						}
+						else {
+							e.getChannel().sendMessage("Huh?").queue();
+							
+							if(gameuser.getEgg().getShiny()){
+								e.getChannel().sendMessage(e.getAuthor().getName() + ", " + gameuser.getEgg().getPokemon() + "(Shiny) just hatched from the egg!").queueAfter(3, TimeUnit.SECONDS);
+								gameuser.getCollection().add(gameuser.getEgg().getPokemon()+"(Shiny)");
+							}
+							else {
+								e.getChannel().sendMessage(e.getAuthor().getName() + ", " + gameuser.getEgg().getPokemon() + " just hatched from the egg!").queueAfter(3, TimeUnit.SECONDS);
+								gameuser.getCollection().add(gameuser.getEgg().getPokemon());
+							}
+							gameuser.setSteps(0);
+							gameuser.setEgg(generateEgg());
+						}
+					}
+										
 					saveGameUser(gameuser);
 				}
 				
@@ -577,7 +578,7 @@ public class botListener extends ListenerAdapter{
 									+"v!block block/unblock - block/unblock tancoon-bot from responding to your message\n\n"
 									+"v!eggmove <pokemon>/<dex no.> <eggmove> - search for possible breeding chain for eggmoves (only 1st chain is available for now)\n\n"
 									+"v!music <play> <url>/<skip>/<stop>/<volume> <1-50> - listen to music\n\n"
-									+"v!game <start>/<stat> - start haching in Discord!";
+									+"v!game <start>/<stat>/<party> (add)/(remove) <pokemon> (shiny) - start haching in Discord!";
 									
 							//221332112085745670 moderator role id
 							//175984908802457600 User Vyhn id
@@ -1165,9 +1166,12 @@ public class botListener extends ListenerAdapter{
 									String addpoke = message[3];
 									String userID = e.getAuthor().getId();
 									
-									if(message[4].equalsIgnoreCase("shiny")){
-										addpoke+="(Shiny)";
+									if(message.length==5){
+										if(message[4].equalsIgnoreCase("shiny")){
+											addpoke+="(Shiny)";
+										}
 									}
+									
 
 									Game_user gameUser = getGameUser(userID);
 
@@ -1185,11 +1189,17 @@ public class botListener extends ListenerAdapter{
 												
 											}
 										}
-
-										gameUser.getCollection().remove(toRemove.get(0));
-										gameUser.getParty().add(toRemove.get(0));
-										saveGameUser(gameUser);
-										e.getChannel().sendMessage(addpoke+" is added to your party.").queue();
+										
+										if(!toRemove.isEmpty()) {
+											gameUser.getCollection().remove(toRemove.get(0));
+											gameUser.getParty().add(toRemove.get(0));
+											saveGameUser(gameUser);
+											e.getChannel().sendMessage(addpoke+" is added to your party.").queue();
+										}
+										else {
+											e.getChannel().sendMessage(addpoke+" is not found in your PC").queue();
+										}
+										
 
 											
 									}
@@ -1218,10 +1228,15 @@ public class botListener extends ListenerAdapter{
 												}
 											}
 
-											gameUser.getParty().remove(toRemove.get(0));
-											gameUser.getCollection().add(toRemove.get(0));
-											saveGameUser(gameUser);
-											e.getChannel().sendMessage(addpoke+" is removed from your party.").queue();
+											if(!toRemove.isEmpty()) {
+												gameUser.getParty().remove(toRemove.get(0));
+												gameUser.getCollection().add(toRemove.get(0));
+												saveGameUser(gameUser);
+												e.getChannel().sendMessage(addpoke+" is removed from your party.").queue();
+											}
+											else {
+												e.getChannel().sendMessage(addpoke+" is not found in your Party.").queue();
+											}
 
 										}
 	
