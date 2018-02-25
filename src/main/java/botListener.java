@@ -126,11 +126,25 @@ public class botListener extends ListenerAdapter{
 							e.getGuild().getTextChannelById("223126199784701952").sendMessage("Huh?").queue();
 							
 							if(gameuser.getEgg().getShiny()){
-								e.getGuild().getTextChannelById("223126199784701952").sendMessage(e.getAuthor().getName() + ", " + gameuser.getEgg().getPokemon() + "(Shiny) just hatched from the egg!").queueAfter(3, TimeUnit.SECONDS);
+								e.getGuild().getTextChannelById("223126199784701952").sendMessage(e.getAuthor().getAsMention() + ", " + gameuser.getEgg().getPokemon() + "(Shiny) just hatched from the egg!").queueAfter(3, TimeUnit.SECONDS);
 								gameuser.getCollection().add(gameuser.getEgg().getPokemon()+"(Shiny)");
 							}
 							else {
-								e.getGuild().getTextChannelById("223126199784701952").sendMessage(e.getAuthor().getName() + ", " + gameuser.getEgg().getPokemon() + " just hatched from the egg!").queueAfter(3, TimeUnit.SECONDS);
+								e.getGuild().getTextChannelById("223126199784701952").sendMessage(e.getAuthor().getAsMention() + ", " + gameuser.getEgg().getPokemon() + " just hatched from the egg!").queueAfter(3, TimeUnit.SECONDS);
+								gameuser.getCollection().add(gameuser.getEgg().getPokemon());
+							}
+							gameuser.setSteps(0);
+							gameuser.setEgg(generateEgg());
+						}
+						else if(e.getGuild().getId().equals("232329466825670657")){
+							e.getGuild().getTextChannelById("307367533344718848").sendMessage("Huh?").queue();
+							
+							if(gameuser.getEgg().getShiny()){
+								e.getGuild().getTextChannelById("307367533344718848").sendMessage(e.getAuthor().getAsMention() + ", " + gameuser.getEgg().getPokemon() + "(Shiny) just hatched from the egg!").queueAfter(3, TimeUnit.SECONDS);
+								gameuser.getCollection().add(gameuser.getEgg().getPokemon()+"(Shiny)");
+							}
+							else {
+								e.getGuild().getTextChannelById("307367533344718848").sendMessage(e.getAuthor().getAsMention() + ", " + gameuser.getEgg().getPokemon() + " just hatched from the egg!").queueAfter(3, TimeUnit.SECONDS);
 								gameuser.getCollection().add(gameuser.getEgg().getPokemon());
 							}
 							gameuser.setSteps(0);
@@ -444,24 +458,7 @@ public class botListener extends ListenerAdapter{
 					//check command start
 					if(message[0].startsWith("v!")){
 						
-						//breeders guild only command
-						if(e.getGuild().getId().equals("221317397653487626")) {
-							//command get role
-							
-							if(message[0].equalsIgnoreCase("v!getrole")) {
-								if(e.getGuild().getId().equals("221317397653487626")) {
-									if(e.getMember().getRoles().isEmpty()){
-										e.getGuild().getController().addSingleRoleToMember(e.getMember(), e.getGuild().getRoleById("223122640326492161")).reason("User Request").queue();
-									}
-									else {
-										e.getChannel().sendMessage("Sorry, only member without a role can claim the role.").queue();
-									}
-								}
-								
-							}
-														
-							
-						}
+						
 						if(message[0].equalsIgnoreCase("v!ping")){
 							e.getChannel().sendMessage("pong").queue();
 						}
@@ -1154,7 +1151,15 @@ public class botListener extends ListenerAdapter{
 									e.getChannel().sendMessage("**User: **"+e.getGuild().getMemberById(gameUser.getUserID()).getEffectiveName()+"\n**Party: **"+gameUser.getParty()+"\n**PC: **"+gameUser.getCollection() + "\n**Current Steps: **" + gameUser.getSteps()).queue();
 								}
 							}
-							
+							else if (message[1].equals("throwEgg")) {
+								Game_user game_user = getGameUser(e.getAuthor().getId());
+								
+								game_user.setSteps(0);
+								game_user.setEgg(generateEgg());
+								
+								saveGameUser(game_user);
+								e.getChannel().sendMessage("Oh no! you throw away your egg! Time to hatch a new one.").queue();
+							}
 							else if(message.length>=2&&message[1].equals("party")) {
 								if(message.length == 2) {
 									String userID = e.getAuthor().getId();
@@ -1427,6 +1432,24 @@ public class botListener extends ListenerAdapter{
 									e.getChannel().sendMessage("Input invalid. Please try again.").queue();
 								}
 							}							
+						}
+						//breeders guild only command
+						else if(e.getGuild().getId().equals("221317397653487626")) {
+							//command get role
+							
+							if(message[0].equalsIgnoreCase("v!getrole")) {
+								if(e.getGuild().getId().equals("221317397653487626")) {
+									if(e.getMember().getRoles().isEmpty()){
+										e.getGuild().getController().addSingleRoleToMember(e.getMember(), e.getGuild().getRoleById("223122640326492161")).reason("User Request").queue();
+									}
+									else {
+										e.getChannel().sendMessage("Sorry, only member without a role can claim the role.").queue();
+									}
+								}
+								
+							}
+														
+							
 						}
 						else{
 							e.getChannel().sendMessage("Sorry, command invalid. Please check v!help for list of commands").queue();
