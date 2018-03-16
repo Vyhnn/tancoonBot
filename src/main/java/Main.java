@@ -29,7 +29,6 @@ public class Main {
 
 			jda.getPresence().setGame(Game.of(Game.GameType.DEFAULT, game[(int)(Math.random() * (game.length-1))]));
 				
-			
 		} catch (LoginException | IllegalArgumentException | InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

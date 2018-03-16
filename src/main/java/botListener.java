@@ -809,6 +809,7 @@ public class botListener extends ListenerAdapter{
 							}
 						}
 						
+						
 						//command hidden power
 						else if(message[0].equalsIgnoreCase("v!hp")) {
 							if(message.length==1){
@@ -1318,6 +1319,29 @@ public class botListener extends ListenerAdapter{
 								}
 							}
 						}
+						
+
+						//command breeding facts
+						else if(message[0].equalsIgnoreCase("v!breedingfacts")) {
+							
+						
+							JsonReader reader = new JsonReader(new FileReader("src/main/java//JSON/facts.json"));
+							Gson gson = new Gson();
+							ArrayList<String> facts = new ArrayList<String>() ;
+							
+							facts = gson.fromJson(reader, new TypeToken<List<String>>(){}.getType());
+							
+							if(!facts.isEmpty()){
+								String fact = facts.get((int) (Math.random() * (facts.size())));
+								
+								e.getChannel().sendMessage(fact).queue();
+							}
+							
+							
+							
+						}
+						
+						
 						//command treasure hunt
 						else if(message[0].equalsIgnoreCase("v!hunt")) {
 							if(message.length==2&&message[1].equals("start")){
@@ -1544,6 +1568,95 @@ public class botListener extends ListenerAdapter{
 											}
 										}
 								});
+							
+						}
+						
+						//command breeding facts
+						if(message[0].equalsIgnoreCase("v!breedingfacts")){
+							if(e.getAuthor().getId().equals("225844374620209153")||e.getAuthor().getId().equals("175984908802457600")){
+								if(message.length>1&&message[1].equals("add")) {
+									JsonReader reader = new JsonReader(new FileReader("src/main/java//JSON/facts.json"));
+									Gson gson = new Gson();
+									ArrayList<String> facts = new ArrayList<String>() ;
+									facts = gson.fromJson(reader, new TypeToken<List<String>>(){}.getType());
+									
+									String fact = "";
+									for(int i=2;i<message.length;i++){
+										fact = fact + message[i]+" ";
+									}
+									
+									facts.add(fact);
+									
+									try (Writer writer = new FileWriter("src/main/java//JSON//facts.json")) {
+									    Gson wgson = new GsonBuilder().create();
+									    wgson.toJson(facts, writer);
+									}
+									
+									final String finalfact = fact;
+									e.getAuthor().openPrivateChannel().queue((value) ->
+								    {
+								        PrivateChannel channel = value; 
+								        channel.sendMessage("Your fact is added.\n Fact: "+finalfact).queue();
+				
+								    });
+								}
+								else if(message.length>1&&message[1].equals("remove")) {
+									if(message.length==2){
+										JsonReader reader = new JsonReader(new FileReader("src/main/java//JSON/facts.json"));
+										Gson gson = new Gson();
+										ArrayList<String> facts = new ArrayList<String>() ;
+										facts = gson.fromJson(reader, new TypeToken<List<String>>(){}.getType());
+										
+										String list = "";
+										
+										for(int i=1;i<=facts.size();i++){
+											list += i+": "+facts.get(i-1)+"\n";
+										}
+										
+										if(!list.isEmpty()){
+											final String finallist = list;
+											e.getAuthor().openPrivateChannel().queue((value) ->
+										    {
+										        PrivateChannel channel = value; 
+										        channel.sendMessage(finallist).queue();
+						
+										    });
+										}
+										
+										
+									}
+									else if(message.length==3&&isStringInt(message[2])){
+										JsonReader reader = new JsonReader(new FileReader("src/main/java//JSON/facts.json"));
+										Gson gson = new Gson();
+										ArrayList<String> facts = new ArrayList<String>() ;
+										facts = gson.fromJson(reader, new TypeToken<List<String>>(){}.getType());
+										
+										if(facts.size()>=Integer.parseInt(message[2])){
+											
+											String fact = facts.get(Integer.parseInt(message[2])-1);
+											
+											facts.remove(Integer.parseInt(message[2])-1);
+											
+											try (Writer writer = new FileWriter("src/main/java//JSON//facts.json")) {
+											    Gson wgson = new GsonBuilder().create();
+											    wgson.toJson(facts, writer);
+											}
+											
+											final String finalfact = fact;
+											e.getAuthor().openPrivateChannel().queue((value) ->
+										    {
+										        PrivateChannel channel = value; 
+										        channel.sendMessage("Your fact is removed.\n Fact: "+finalfact).queue();
+						
+										    });
+											
+										}
+									}
+									
+									
+									
+								}
+							}
 							
 						}
 						
@@ -1965,12 +2078,12 @@ public class botListener extends ListenerAdapter{
 						}
 						else {
 							//249187330731147264 Vyhn bot private channel id
-							e.getJDA().getUserById("175984908802457600").openPrivateChannel().queue((value) ->
+							/*e.getJDA().getUserById("175984908802457600").openPrivateChannel().queue((value) ->
 						    {
 						        PrivateChannel channel = value; 
 						        channel.sendMessage("**User: **"+e.getAuthor().getName()+"\n"+e.getMessage().getContentRaw()).queue();
 		
-						    });
+						    });*/
 							//e.getJDA().getPrivateChannelById("249187330731147264").sendMessage().queue();
 						}
 						
