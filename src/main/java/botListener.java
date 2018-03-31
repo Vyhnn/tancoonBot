@@ -502,7 +502,7 @@ public class botListener extends ListenerAdapter{
 						else if(message[0].equalsIgnoreCase("v!tancoon")||message[0].equalsIgnoreCase("v!tanscure")||message[0].equalsIgnoreCase("v!tansheen")) {
 							MessageBuilder messageb = new MessageBuilder().append(" ");
 							
-							File f = new File("src/main/java//img/tancoon_"+(int )(Math.random() * 6 + 1)+".png");
+							File f = new File("src/main/java//img/tancoon_"+(int )(Math.random() * 13 + 1)+".png");
 							Message m = messageb.build();
 							e.getChannel().sendFile(f, "Tancoon.png", m).queue();
 						}
