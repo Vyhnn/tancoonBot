@@ -110,7 +110,7 @@ public class botListener extends ListenerAdapter{
 				String userID_game = e.getAuthor().getId();
 				
 				Game_user gameuser = getGameUser(userID_game);				
-				if(gameuser!=null){
+				if(gameuser!=null&&gameuser.getHatching()){
 					
 					
 					if(checkFlamebody(gameuser.getParty())){
@@ -507,6 +507,19 @@ public class botListener extends ListenerAdapter{
 							e.getChannel().sendFile(f, "Tancoon.png", m).queue();
 						}
 						
+						//check servers
+						else if(message[0].equalsIgnoreCase("v!server")&&e.getAuthor().getId().equals("175984908802457600")){
+							e.getAuthor().openPrivateChannel().queue((value) ->
+						    {
+						        PrivateChannel channel = value; 
+						        
+						        channel.sendMessage(e.getJDA().getGuilds().toString()).queue();
+		
+						    });
+							
+						}
+						
+						
 						//change bot status
 						else if(message[0].equalsIgnoreCase("v!bot")){
 							
@@ -564,18 +577,18 @@ public class botListener extends ListenerAdapter{
 						//command help
 						else if(message[0].equalsIgnoreCase("v!help")) {
 							
-							String help = "```\n"+"<> - required\n() - optional\n\n"
+							String help = "```\n<> - required\n[] - optional\n| - alternative\n\n"
 									+"v!help - well you are here already...you know what this is\n\n"
 									+"v!ping - check to see if the bot is dead\n\n"
 									+"v!hp <hp> <atk> <def> <sp.atk> <sp.def> <speed>  - calculate hidden power\n\n"
 									+"v!nature - check the nature table\n\n"
 									+"v!eggspawn - check the egg spawn rate\n\n"
-									+"v!port <username>/<user tag> - check the portfolio of that user\n\n"
-									+"v!poke <pokemon>/<dex no.> ('abilities'/'stats'/'gender'/'egggroups'/'eggmoves'/'tms'/'moves') - check the information of that pokemon\n\n"
-									+"v!block block/unblock - block/unblock tancoon-bot from responding to your message\n\n"
-									+"v!eggmove <pokemon>/<dex no.> <eggmove> - search for possible breeding chain for eggmoves (only 1st chain is available for now)\n\n"
-									+"v!music <play> <url>/<skip>/<stop>/<volume> <1-50> - listen to music\n\n"
-									+"v!game <start>/<stat>/<party> (add)/(remove) <pokemon> (shiny) - start haching in Discord!\n\n"
+									+"v!port <username|user tag> - check the portfolio of that user\n\n"
+									+"v!poke <pokemon|dex no.> [abilities|stats|gender|egggroups|eggmoves|tms|moves] - check the information of that pokemon\n\n"
+									+"v!block <block|unblock> - block/unblock tancoon-bot from responding to your message\n\n"
+									+"v!eggmove <pokemon|dex no.> <eggmove> - search for possible breeding chain for eggmoves (only 1st chain is available for now)\n\n"
+									+"v!music <play url|skip|stop|volume 1-50> - listen to music\n\n"
+									+"v!game <start|stat|throwegg|pc [page]|party <add|remove> <pokemon> [shiny]> - start haching in Discord!\n\n"
 									+"v!breedingfacts - learn more about breeding!!\n\n";
 									
 							//221332112085745670 moderator role id
@@ -584,7 +597,7 @@ public class botListener extends ListenerAdapter{
 								help = help + "v!getrole - claim 'still hatching' role if you do not have any role\n\n";
 							}
 							if(e.getMember().getRoles().contains(e.getGuild().getRoleById("221332112085745670"))||e.getAuthor().getId().equals("175984908802457600")){
-								help = help + "v!bot <'game'>/<'status'> <game name>/<status> - change the bot's game/status, status include ('online'), ('idle'), ('dnd') and ('invisible')\n";
+								help = help + "v!bot <game game|status status> - change the bot's game/status, status include 'online', 'idle', 'dnd' and 'invisible'\n";
 								help = help + "```"+"\n";
 								e.getChannel().sendMessage(help).queue();
 							}
@@ -1141,7 +1154,6 @@ public class botListener extends ListenerAdapter{
 									addUser(user);
 								}
 
-								e.getChannel().sendMessage("**User: **"+e.getGuild().getMemberById(user.getUserID()).getEffectiveName()+"\n**Party: **"+user.getParty() +"\n**PC: **"+user.getCollection() +"\n**Current Steps: **" + user.getSteps()).queue();
 
 							}
 							else if (message.length==2&&message[1].equals("stat")){
@@ -1150,10 +1162,10 @@ public class botListener extends ListenerAdapter{
 								Game_user gameUser = getGameUser(userID);
 								
 								if(gameUser!=null){
-									e.getChannel().sendMessage("**User: **"+e.getGuild().getMemberById(gameUser.getUserID()).getEffectiveName()+"\n**Party: **"+gameUser.getParty()+"\n**PC: **"+gameUser.getCollection() + "\n**Current Steps: **" + gameUser.getSteps()).queue();
+									e.getChannel().sendMessage("**User: **"+e.getGuild().getMemberById(gameUser.getUserID()).getEffectiveName()+"\n**Party: **"+gameUser.getParty() + "\n**Current Steps: **" + gameUser.getSteps()).queue();
 								}
 							}
-							else if (message[1].equals("throwEgg")) {
+							else if (message[1].equalsIgnoreCase("throwEgg")) {
 								Game_user game_user = getGameUser(e.getAuthor().getId());
 								
 								game_user.setSteps(0);
@@ -1161,6 +1173,25 @@ public class botListener extends ListenerAdapter{
 								
 								saveGameUser(game_user);
 								e.getChannel().sendMessage("Oh no! you throw away your egg! Time to hatch a new one.").queue();
+							}
+							else if(message.length>=2&&message[1].equals("pc")){
+								if(message.length == 2) {
+									String userID = e.getAuthor().getId();
+									Game_user gameUser = getGameUser(userID);
+									
+									int totalPage = (int) Math.ceil((double)gameUser.getCollection().size() / 10);
+									e.getChannel().sendMessage("**PC(1/"+totalPage+"): **"+getPClist(gameUser, 1).toString()).queue();
+								}
+								else if(message.length == 3 && isStringInt(message[2])){
+									String userID = e.getAuthor().getId();
+									Game_user gameUser = getGameUser(userID);
+									
+									int totalPage = (int) Math.ceil((double)gameUser.getCollection().size() / 10);
+									e.getChannel().sendMessage("**PC("+message[2]+"/"+totalPage+"): **"+getPClist(gameUser, Integer.parseInt(message[2])).toString()).queue();
+									
+									
+								}
+								
 							}
 							else if(message.length>=2&&message[1].equals("party")) {
 								if(message.length == 2) {
@@ -2160,16 +2191,23 @@ public class botListener extends ListenerAdapter{
 		
 		for(Game_user user:gameusers){
 			if(user.getUserID().equals(userid)){
-				if(user.getParty()==null){
-					user.setParty(new ArrayList<String>());
-					saveGameUser(user);
-				}
+				updateGameUser(user);
 				return user;
 			}
 		}
 		
 		return null;
 		
+	}
+	
+	private void updateGameUser(Game_user user) throws IOException {
+		if(user.getParty()==null){
+			user.setParty(new ArrayList<String>());
+		}
+		if(user.getHatching()==false){
+			user.setHatching(true);
+		}
+		saveGameUser(user);
 	}
 	
 	private void saveGameUser(Game_user user) throws IOException{
@@ -2190,6 +2228,25 @@ public class botListener extends ListenerAdapter{
 		}
 	}
 	
+	private ArrayList<String> getPClist(Game_user user, int page) {
+		ArrayList<String> PC = user.getCollection();
+		
+		ArrayList<String> display = new ArrayList<String>();
+		int pageStart = (page-1)*10;
+
+		if(PC.size()>pageStart) {
+			int size = 10;
+			
+			if(PC.size()-pageStart<=size){
+				size = PC.size()-pageStart;
+			}
+			for(int i = 0; i < size; i++) {
+				display.add(PC.get(i+pageStart));
+			}
+		}
+		
+		return display;
+	}
 	private void addUser(Game_user user) throws IOException{
 
 		JsonReader gamereader = new JsonReader(new FileReader("src/main/java//JSON/game.json"));
