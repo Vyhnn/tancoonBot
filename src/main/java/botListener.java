@@ -1426,7 +1426,7 @@ public class botListener extends ListenerAdapter{
 							ArrayList<String> facts = new ArrayList<String>() ;
 							
 							facts = gson.fromJson(reader, new TypeToken<List<String>>(){}.getType());
-							
+
 							if(!facts.isEmpty()){
 								String fact = facts.get((int) (Math.random() * (facts.size())));
 								
@@ -1697,19 +1697,20 @@ public class botListener extends ListenerAdapter{
 				
 								    });
 								}
-								else if(message.length>1&&message[1].equals("remove")) {
+								else if(message.length>1&&message[1].equals("list")) {
 									if(message.length==2){
 										JsonReader reader = new JsonReader(new FileReader("src/main/java//JSON/facts.json"));
 										Gson gson = new Gson();
 										ArrayList<String> facts = new ArrayList<String>() ;
 										facts = gson.fromJson(reader, new TypeToken<List<String>>(){}.getType());
 										
+										ArrayList<String> factlist = getfactlist(facts,1);
 										String list = "";
 										
-										for(int i=1;i<=facts.size();i++){
-											list += i+": "+facts.get(i-1)+"\n";
+										for(int i=1;i<=factlist.size();i++){
+											list += factlist.get(i-1)+"\n";
 										}
-										System.out.println(list);
+
 										if(!list.isEmpty()){
 											final String finallist = list;
 											e.getAuthor().openPrivateChannel().queue((value) ->
@@ -1719,10 +1720,34 @@ public class botListener extends ListenerAdapter{
 						
 										    });
 										}
-										
-										
 									}
-									else if(message.length==3&&isStringInt(message[2])){
+									else if(message.length==3&&isStringInt(message[2])) {
+										JsonReader reader = new JsonReader(new FileReader("src/main/java//JSON/facts.json"));
+										Gson gson = new Gson();
+										ArrayList<String> facts = new ArrayList<String>() ;
+										facts = gson.fromJson(reader, new TypeToken<List<String>>(){}.getType());
+										
+										ArrayList<String> factlist = getfactlist(facts,Integer.parseInt(message[2]));
+										String list = "";
+										
+										for(int i=1;i<=factlist.size();i++){
+											list += factlist.get(i-1)+"\n";
+										}
+
+										if(!list.isEmpty()){
+											final String finallist = list;
+											e.getAuthor().openPrivateChannel().queue((value) ->
+										    {
+										        PrivateChannel channel = value; 
+										        channel.sendMessage(finallist).queue();
+						
+										    });
+										}
+									}
+								}
+								else if(message.length>1&&message[1].equals("remove")) {
+								
+									if(message.length==3&&isStringInt(message[2])){
 										JsonReader reader = new JsonReader(new FileReader("src/main/java//JSON/facts.json"));
 										Gson gson = new Gson();
 										ArrayList<String> facts = new ArrayList<String>() ;
@@ -2475,6 +2500,25 @@ public class botListener extends ListenerAdapter{
 		
 		
 		return false;
+	}
+	
+	private ArrayList<String> getfactlist(ArrayList<String> facts, int page) {
+		
+		ArrayList<String> display = new ArrayList<String>();
+		int pageStart = (page-1)*10;
+
+		if(facts.size()>pageStart) {
+			int size = 10;
+			
+			if(facts.size()-pageStart<=size){
+				size = facts.size()-pageStart;
+			}
+			for(int i = 0; i < size; i++) {				
+				display.add((i+pageStart+1)+": "+facts.get(i+pageStart));
+			}
+		}
+		
+		return display;
 	}
 	
 	private void addHuntUser(ArrayList<Hunt_user> users, Hunt_user user) throws IOException{
