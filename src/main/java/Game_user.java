@@ -4,13 +4,13 @@ public class Game_user {
 
 	String userID;
 	Egg egg;
-	ArrayList<String> collection;
-	ArrayList<String> party;
+	ArrayList<Game_poke> collection;
+	ArrayList<Game_poke> party;
 	boolean hatching = false;
 	int steps = 0;
 
 	
-	public Game_user(String userID, ArrayList<String> party, ArrayList<String> collection, boolean hatching, int steps, Egg egg) {
+	public Game_user(String userID, ArrayList<Game_poke> party, ArrayList<Game_poke> collection, boolean hatching, int steps, Egg egg) {
 		super();
 		this.userID = userID;
 		this.collection = collection;
@@ -28,19 +28,19 @@ public class Game_user {
 		this.userID = userID;
 	}
 
-	public ArrayList<String> getCollection() {
+	public ArrayList<Game_poke> getCollection() {
 		return collection;
 	}
 
-	public void setCollection(ArrayList<String> collection) {
+	public void setCollection(ArrayList<Game_poke> collection) {
 		this.collection = collection;
 	}
 	
-	public ArrayList<String> getParty() {
+	public ArrayList<Game_poke> getParty() {
 		return party;
 	}
 
-	public void setParty(ArrayList<String> party) {
+	public void setParty(ArrayList<Game_poke> party) {
 		this.party = party;
 	}
 	

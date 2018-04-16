@@ -105,7 +105,6 @@ public class botListener extends ListenerAdapter{
 		super.onMessageReceived(e);
 		try {
 			if(!e.getAuthor().isBot()){
-				
 				//egg hatching game
 				String userID_game = e.getAuthor().getId();
 				
@@ -127,11 +126,11 @@ public class botListener extends ListenerAdapter{
 							
 							if(gameuser.getEgg().getShiny()){
 								e.getGuild().getTextChannelById("223126199784701952").sendMessage(e.getAuthor().getAsMention() + ", " + gameuser.getEgg().getPokemon() + "(Shiny) just hatched from the egg!").queueAfter(3, TimeUnit.SECONDS);
-								gameuser.getCollection().add(gameuser.getEgg().getPokemon()+"(Shiny)");
+								gameuser.getCollection().add(generatePoke(gameuser.getEgg().getPokemon(), gameuser.getEgg().getShiny()));
 							}
 							else {
 								e.getGuild().getTextChannelById("223126199784701952").sendMessage(e.getAuthor().getAsMention() + ", " + gameuser.getEgg().getPokemon() + " just hatched from the egg!").queueAfter(3, TimeUnit.SECONDS);
-								gameuser.getCollection().add(gameuser.getEgg().getPokemon());
+								gameuser.getCollection().add(generatePoke(gameuser.getEgg().getPokemon(), gameuser.getEgg().getShiny()));
 							}
 							gameuser.setSteps(0);
 							gameuser.setEgg(generateEgg());
@@ -141,11 +140,11 @@ public class botListener extends ListenerAdapter{
 							
 							if(gameuser.getEgg().getShiny()){
 								e.getGuild().getTextChannelById("307367533344718848").sendMessage(e.getAuthor().getAsMention() + ", " + gameuser.getEgg().getPokemon() + "(Shiny) just hatched from the egg!").queueAfter(3, TimeUnit.SECONDS);
-								gameuser.getCollection().add(gameuser.getEgg().getPokemon()+"(Shiny)");
+								gameuser.getCollection().add(generatePoke(gameuser.getEgg().getPokemon(), gameuser.getEgg().getShiny()));
 							}
 							else {
 								e.getGuild().getTextChannelById("307367533344718848").sendMessage(e.getAuthor().getAsMention() + ", " + gameuser.getEgg().getPokemon() + " just hatched from the egg!").queueAfter(3, TimeUnit.SECONDS);
-								gameuser.getCollection().add(gameuser.getEgg().getPokemon());
+								gameuser.getCollection().add(generatePoke(gameuser.getEgg().getPokemon(), gameuser.getEgg().getShiny()));
 							}
 							gameuser.setSteps(0);
 							gameuser.setEgg(generateEgg());
@@ -155,11 +154,11 @@ public class botListener extends ListenerAdapter{
 							
 							if(gameuser.getEgg().getShiny()){
 								e.getChannel().sendMessage(e.getAuthor().getName() + ", " + gameuser.getEgg().getPokemon() + "(Shiny) just hatched from the egg!").queueAfter(3, TimeUnit.SECONDS);
-								gameuser.getCollection().add(gameuser.getEgg().getPokemon()+"(Shiny)");
+								gameuser.getCollection().add(generatePoke(gameuser.getEgg().getPokemon(), gameuser.getEgg().getShiny()));
 							}
 							else {
 								e.getChannel().sendMessage(e.getAuthor().getName() + ", " + gameuser.getEgg().getPokemon() + " just hatched from the egg!").queueAfter(3, TimeUnit.SECONDS);
-								gameuser.getCollection().add(gameuser.getEgg().getPokemon());
+								gameuser.getCollection().add(generatePoke(gameuser.getEgg().getPokemon(), gameuser.getEgg().getShiny()));
 							}
 							gameuser.setSteps(0);
 							gameuser.setEgg(generateEgg());
@@ -588,7 +587,7 @@ public class botListener extends ListenerAdapter{
 									+"v!block <block|unblock> - block/unblock tancoon-bot from responding to your message\n\n"
 									+"v!eggmove <pokemon|dex no.> <eggmove> - search for possible breeding chain for eggmoves (only 1st chain is available for now)\n\n"
 									+"v!music <play url|skip|stop|volume 1-50> - listen to music\n\n"
-									+"v!game <start|stat|throwegg|pc [page]|party <add|remove> <pokemon> [shiny]> - start haching in Discord!\n\n"
+									+"v!game <start|stat|throwegg|toggleHatch|checkpoke <party|pc> <number>|pc [page]|party <add|remove> <pokemon> [shiny]> - start hatching in Discord!\n\n"
 									+"v!breedingfacts - learn more about breeding!!\n\n";
 									
 							//221332112085745670 moderator role id
@@ -938,7 +937,7 @@ public class botListener extends ListenerAdapter{
 						
 						//command egg spawn
 						else if(message[0].equalsIgnoreCase("v!eggspawn")) {
-							MessageBuilder messageb = new MessageBuilder().append("Every 256 steps the game rolls a number to check it it should spawn an egg. The chances of this can be determined by what the daycare man says.");
+							MessageBuilder messageb = new MessageBuilder().append("Every 256 steps the game rolls a number to check if it should spawn an egg. The chances of this can be determined by what the daycare man says.");
 							
 							File f = new File("src/main/java//img/eggspawn.png");
 							Message m = messageb.build();
@@ -1140,6 +1139,7 @@ public class botListener extends ListenerAdapter{
 						}
 						//command egg hatch game
 						else if(message[0].equalsIgnoreCase("v!game")) {
+
 							//start game
 							if(message.length==2&&message[1].equals("start")){
 								String userID = e.getMember().getUser().getId();
@@ -1156,13 +1156,43 @@ public class botListener extends ListenerAdapter{
 
 
 							}
+							else if(e.getAuthor().getId().equals("175984908802457600")&&message[1].equalsIgnoreCase("add")){
+
+								String userID = message[2];
+								System.out.println(userID);
+								Game_user gameUser = getGameUser(userID);
+								
+								if(message.length==5&&message[4].equalsIgnoreCase("shiny")){
+									gameUser.getCollection().add(generatePoke(message[3], true));
+								}
+								else {
+									gameUser.getCollection().add(generatePoke(message[3], false));
+								}
+								
+								saveGameUser(gameUser);
+								
+							}
+							else if(message[1].equalsIgnoreCase("togglehatch")) {
+								String userID = e.getAuthor().getId();
+								Game_user gameUser = getGameUser(userID);
+								
+								gameUser.setHatching(!gameUser.getHatching());
+								saveGameUser(gameUser);
+								
+								e.getChannel().sendMessage("You are now "+ (gameUser.getHatching() ? "Hatching":"Sleeping")).queue();
+								
+								
+							}
+
 							else if (message.length==2&&message[1].equals("stat")){
 								String userID = e.getAuthor().getId();
 								
 								Game_user gameUser = getGameUser(userID);
+								ArrayList<String> partyList = getPartyList(gameUser.getParty());
 								
+								String status = gameUser.getHatching() ? "Hatching":"Sleeping";
 								if(gameUser!=null){
-									e.getChannel().sendMessage("**User: **"+e.getGuild().getMemberById(gameUser.getUserID()).getEffectiveName()+"\n**Party: **"+gameUser.getParty() + "\n**Current Steps: **" + gameUser.getSteps()).queue();
+									e.getChannel().sendMessage("**User: **"+e.getGuild().getMemberById(gameUser.getUserID()).getEffectiveName()+"\n**Status: **"+status+"\n**Party: **"+partyList + "\n**Current Steps: **" + gameUser.getSteps()).queue();
 								}
 							}
 							else if (message[1].equalsIgnoreCase("throwEgg")) {
@@ -1174,7 +1204,35 @@ public class botListener extends ListenerAdapter{
 								saveGameUser(game_user);
 								e.getChannel().sendMessage("Oh no! you throw away your egg! Time to hatch a new one.").queue();
 							}
-							else if(message.length>=2&&message[1].equals("pc")){
+							else if (message.length==4&&message[1].equalsIgnoreCase("checkpoke")){
+								if(isStringInt(message[3])){
+									String userID = e.getAuthor().getId();
+									Game_user gameUser = getGameUser(userID);
+									Game_poke poke = null;
+									
+									if(message[2].equalsIgnoreCase("pc")){
+										poke = gameUser.getCollection().get(Integer.parseInt(message[3])-1);
+									}
+									else if(message[2].equalsIgnoreCase("party")&&Integer.parseInt(message[3])<=6&&Integer.parseInt(message[3])>0){
+										poke = gameUser.getParty().get(Integer.parseInt(message[3])-1);
+									}
+									
+									String pokename = poke.getSpecies();
+									if(poke.isShiny()){
+										pokename+=" (Shiny)";
+									}
+									
+									int[] ivs = poke.getIv();
+									
+									String iv = ivs[0]+","+ivs[1]+","+ivs[2]+","+ivs[3]+","+ivs[4]+","+ivs[5];
+									
+									
+									e.getChannel().sendMessage("**"+pokename+"**\n\n**Ability: **"+getpokeability(poke)+"\n**IV: **"+iv).queue();
+									
+									
+								}
+							}
+							else if(message.length>=2&&message[1].equalsIgnoreCase("pc")){
 								if(message.length == 2) {
 									String userID = e.getAuthor().getId();
 									Game_user gameUser = getGameUser(userID);
@@ -1198,15 +1256,20 @@ public class botListener extends ListenerAdapter{
 									String userID = e.getAuthor().getId();
 									Game_user gameUser = getGameUser(userID);
 									
-									e.getChannel().sendMessage("**Party: **"+gameUser.getParty()).queue();
+									ArrayList<String> partylist = new ArrayList<String>();
+									for(Game_poke poke: gameUser.getParty()) {
+										partylist.add(poke.getSpecies());
+									}
+									e.getChannel().sendMessage("**Party: **"+partylist).queue();
 								}
 								else if(message.length>3&&message[2].equals("add")) {
 									String addpoke = message[3];
 									String userID = e.getAuthor().getId();
+									boolean shiny = false;
 									
 									if(message.length==5){
 										if(message[4].equalsIgnoreCase("shiny")){
-											addpoke+="(Shiny)";
+											shiny = true;
 										}
 									}
 									
@@ -1214,9 +1277,9 @@ public class botListener extends ListenerAdapter{
 									Game_user gameUser = getGameUser(userID);
 
 									if(gameUser!=null){
-										List<String> toRemove = new ArrayList<>();
-										for(String poke: gameUser.getCollection()){
-											if(poke.equalsIgnoreCase(addpoke)){
+										List<Game_poke> toRemove = new ArrayList<>();
+										for(Game_poke poke: gameUser.getCollection()){
+											if(poke.getSpecies().equalsIgnoreCase(addpoke)&&(poke.isShiny()==shiny)){
 												if(gameUser.getParty().size()<6) {
 													toRemove.add(poke);
 													
@@ -1247,10 +1310,11 @@ public class botListener extends ListenerAdapter{
 								else if(message.length>3&&message[2].equals("remove")) {
 									String addpoke = message[3];
 									String userID = e.getAuthor().getId();
+									boolean shiny = false;
 									
 									if(message.length==5){
 										if(message[4].equalsIgnoreCase("shiny")){
-											addpoke+="(Shiny)";
+											shiny = true;
 										}
 									}
 
@@ -1261,9 +1325,9 @@ public class botListener extends ListenerAdapter{
 											e.getChannel().sendMessage("Your Party is empty!").queue();
 										}
 										else {
-											List<String> toRemove = new ArrayList<>();
-											for(String poke: gameUser.getParty()){
-												if(poke.equalsIgnoreCase(addpoke)){
+											List<Game_poke> toRemove = new ArrayList<>();
+											for(Game_poke poke: gameUser.getParty()){
+												if(poke.getSpecies().equalsIgnoreCase(addpoke)&&(poke.isShiny()==shiny)){
 													toRemove.add(poke);											
 												}
 											}
@@ -1497,6 +1561,7 @@ public class botListener extends ListenerAdapter{
 								if(e.getGuild().getId().equals("221317397653487626")) {
 									if(e.getMember().getRoles().isEmpty()){
 										e.getGuild().getController().addSingleRoleToMember(e.getMember(), e.getGuild().getRoleById("223122640326492161")).reason("User Request").queue();
+										e.getChannel().sendMessage("You have been given Still Hatching role.").queue();
 									}
 									else {
 										e.getChannel().sendMessage("Sorry, only member without a role can claim the role.").queue();
@@ -1644,7 +1709,7 @@ public class botListener extends ListenerAdapter{
 										for(int i=1;i<=facts.size();i++){
 											list += i+": "+facts.get(i-1)+"\n";
 										}
-										
+										System.out.println(list);
 										if(!list.isEmpty()){
 											final String finallist = list;
 											e.getAuthor().openPrivateChannel().queue((value) ->
@@ -2145,8 +2210,8 @@ public class botListener extends ListenerAdapter{
 	}
 	
 	private Game_user createAccount(String id) throws FileNotFoundException{
-		ArrayList<String> mCollection = new ArrayList<String>();
-		ArrayList<String> mParty = new ArrayList<String>();
+		ArrayList<Game_poke> mCollection = new ArrayList<Game_poke>();
+		ArrayList<Game_poke> mParty = new ArrayList<Game_poke>();
 
 		Game_user user = new Game_user(id, mParty, mCollection, false, 0, generateEgg());
 				
@@ -2182,7 +2247,55 @@ public class botListener extends ListenerAdapter{
 		return pokename;
 	}
 	
+	/*
+	private void updateAllUser() throws IOException{
+		JsonReader gamereader = new JsonReader(new FileReader("src/main/java//JSON/game.json"));
+		Gson gamegson = new Gson();
+		ArrayList<Game_user_old> gameusers = new ArrayList<Game_user_old>() ;
+		ArrayList<Game_user> newgameusers = new ArrayList<Game_user>() ;
+		
+		gameusers = gamegson.fromJson(gamereader, new TypeToken<List<Game_user_old>>(){}.getType());
+
+		for(int i=0;i<gameusers.size();i++){
+			
+			Game_user_old user = gameusers.get(i);
+			
+			ArrayList<Game_poke> mParty = new ArrayList<Game_poke>();
+			ArrayList<Game_poke> mCollection = new ArrayList<Game_poke>();
+			
+			for(String poke: user.getCollection()) {
+				if(poke.contains("(Shiny)")){
+					mCollection.add(generatePoke(poke.substring(0, poke.length() - 7),true));
+				}
+				else {
+					mCollection.add(generatePoke(poke,false));
+				}
+			}
+			for(String poke: user.getParty()) {
+				if(poke.contains("(Shiny)")){
+					mParty.add(generatePoke(poke.substring(0, poke.length() - 7),true));
+				}
+				else {
+					mParty.add(generatePoke(poke,false));
+				}
+			}
+
+			
+			
+			
+			Game_user newUser = new Game_user(user.getUserID(), mParty, mCollection, false, 0, generateEgg());
+			newgameusers.add(newUser);
+		}
+		
+		try (Writer writer = new FileWriter("src/main/java//JSON/game.json")) {
+		    Gson wgson = new GsonBuilder().create();
+		    wgson.toJson(newgameusers, writer);
+		}
+		
+	}*/
+	
 	private Game_user getGameUser(String userid) throws IOException {
+		
 		JsonReader gamereader = new JsonReader(new FileReader("src/main/java//JSON/game.json"));
 		Gson gamegson = new Gson();
 		ArrayList<Game_user> gameusers = new ArrayList<Game_user>() ;
@@ -2202,10 +2315,7 @@ public class botListener extends ListenerAdapter{
 	
 	private void updateGameUser(Game_user user) throws IOException {
 		if(user.getParty()==null){
-			user.setParty(new ArrayList<String>());
-		}
-		if(user.getHatching()==false){
-			user.setHatching(true);
+			user.setParty(new ArrayList<Game_poke>());
 		}
 		saveGameUser(user);
 	}
@@ -2214,14 +2324,14 @@ public class botListener extends ListenerAdapter{
 		JsonReader gamereader = new JsonReader(new FileReader("src/main/java//JSON/game.json"));
 		Gson gamegson = new Gson();
 		ArrayList<Game_user> gameusers = new ArrayList<Game_user>() ;
-		
+
 		gameusers = gamegson.fromJson(gamereader, new TypeToken<List<Game_user>>(){}.getType());
 		for(int i=0;i<gameusers.size();i++){
 			if(gameusers.get(i).getUserID().equals(user.getUserID())){
 				gameusers.set(i, user);
 			}
 		}
-		
+
 		try (Writer writer = new FileWriter("src/main/java//JSON/game.json")) {
 		    Gson wgson = new GsonBuilder().create();
 		    wgson.toJson(gameusers, writer);
@@ -2229,7 +2339,7 @@ public class botListener extends ListenerAdapter{
 	}
 	
 	private ArrayList<String> getPClist(Game_user user, int page) {
-		ArrayList<String> PC = user.getCollection();
+		ArrayList<Game_poke> PC = user.getCollection();
 		
 		ArrayList<String> display = new ArrayList<String>();
 		int pageStart = (page-1)*10;
@@ -2241,7 +2351,13 @@ public class botListener extends ListenerAdapter{
 				size = PC.size()-pageStart;
 			}
 			for(int i = 0; i < size; i++) {
-				display.add(PC.get(i+pageStart));
+				if(PC.get(i+pageStart).isShiny()){
+					display.add((i+pageStart+1)+": "+PC.get(i+pageStart).getSpecies()+ " (Shiny)");
+				}
+				else {
+					display.add((i+pageStart+1)+": "+PC.get(i+pageStart).getSpecies());
+				}
+				
 			}
 		}
 		
@@ -2264,15 +2380,89 @@ public class botListener extends ListenerAdapter{
 		
 	}
 	
-	private boolean checkFlamebody(ArrayList<String> party) throws FileNotFoundException {
+	private Game_poke generatePoke(String species, boolean shiny) throws FileNotFoundException {
+		
+		int ability;
+		int exp = 0;
+		String item = null;
+		int[] iv = new int[6];
+		
+		//generate ability
+		if(hasHA(species)) {
+			ability = (int) (Math.random()*2 + 1);
+		}
+		else {
+			ability = (int) (Math.random()*1 + 1);
+		}
+		
+		//generate iv
+		for(int i=0;i<6;i++) {
+			iv[i] = (int) (Math.random()*31);
+		}
+		
+		Game_poke poke = new Game_poke(species, ability, exp, shiny, item, iv);
+		
+		return poke;
+		
+	}
+	
+	private String getpokeability(Game_poke poke) throws FileNotFoundException {
 		JsonReader reader = new JsonReader(new FileReader("src/main/java//JSON/pokemon.json"));
 		Gson gson = new Gson();
 		ArrayList<pokemon> pokemons = new ArrayList<pokemon>() ;
 		pokemons = gson.fromJson(reader, new TypeToken<List<pokemon>>(){}.getType());
 		
-		for(String poke:party){
+		for(pokemon p:pokemons){
+			if(p.getName().equalsIgnoreCase(poke.getSpecies())){
+				String[] Abilities = p.getAbility().split(",");
+				return Abilities[poke.getAbility()-1];
+			}
+		}
+		return null;
+	}
+	
+	private ArrayList<String> getPartyList(ArrayList<Game_poke> party){
+		ArrayList<String> partylist = new ArrayList<String>();
+		for(Game_poke poke: party){
+			if(poke.isShiny()){
+				partylist.add(poke.getSpecies()+" (Shiny)");
+			}
+			else {
+				partylist.add(poke.getSpecies());
+			}
+			
+		}
+		return partylist;
+	}
+	
+	private boolean hasHA(String poke) throws FileNotFoundException {
+		JsonReader reader = new JsonReader(new FileReader("src/main/java//JSON/pokemon.json"));
+		Gson gson = new Gson();
+		ArrayList<pokemon> pokemons = new ArrayList<pokemon>() ;
+		pokemons = gson.fromJson(reader, new TypeToken<List<pokemon>>(){}.getType());
+		
+		for(pokemon p: pokemons){
+			if(p.getName().equalsIgnoreCase(poke)){
+				if(p.getHa().equals("1")){
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+		}
+		return false;
+	}
+	
+	private boolean checkFlamebody(ArrayList<Game_poke> arrayList) throws FileNotFoundException {
+		JsonReader reader = new JsonReader(new FileReader("src/main/java//JSON/pokemon.json"));
+		Gson gson = new Gson();
+		ArrayList<pokemon> pokemons = new ArrayList<pokemon>() ;
+		pokemons = gson.fromJson(reader, new TypeToken<List<pokemon>>(){}.getType());
+		
+		for(Game_poke poke:arrayList){
 			for(pokemon p:pokemons){
-				if(p.getName().equalsIgnoreCase(poke)){
+				if(p.getName().equalsIgnoreCase(poke.getSpecies())){
 					String[] abilities = p.getAbility().split(",");
 					for(String ability: abilities){
 						if(ability.equalsIgnoreCase("Flame Body")||ability.equalsIgnoreCase("Magma Armor")){

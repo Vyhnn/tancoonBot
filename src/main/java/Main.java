@@ -12,7 +12,7 @@ public class Main {
 	//test-bot
 	public static final String token = "NDE1NzYwMTUwODc2Mzg5Mzg2.DW6mVQ.doaagp3Ru9ejg186j_VA4IcJLAc";
 	//real tancoon bot
-	/*public static final String token = "MjQ5MTg3MzMwNzMxMTQ3MjY0.C8gAfA.hWgW-CrlvWh4xRxdweoVTlzkweU"*/;
+	/*public static final String token = "MjQ5MTg3MzMwNzMxMTQ3MjY0.C8gAfA.hWgW-CrlvWh4xRxdweoVTlzkweU";*/
 			
 	public static JDA jda;
 	
