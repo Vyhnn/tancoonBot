@@ -20,6 +20,7 @@ repositories {
 // In this section you declare the dependencies for your production and test code
 dependencies {
     // The production code uses the SLF4J logging API at compile time
+    compile 'com.jagrosh:jda-utilities:2.1'
     compile 'net.dv8tion:JDA:3.5.0_329'
 	compile 'com.sedmelluq:lavaplayer:1.2.45'
 	// https://mvnrepository.com/artifact/com.google.code.gson/gson

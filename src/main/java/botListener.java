@@ -55,7 +55,7 @@ public class botListener extends ListenerAdapter{
 	String[] Tancoons = new String[] {"tancoon", "tanscure", "tansheen"};
 	static String[] move = new String[] {"MEGAHORN", "ATTACKORDER", "BUGBUZZ", "XSCISSOR", "SIGNALBEAM", "UTURN", "STEAMROLLER", "BUGBITE", "SILVERWIND", "STRUGGLEBUG", "TWINEEDLE", "FURYCUTTER", "LEECHLIFE", "PINMISSILE", "DEFENDORDER", "HEALORDER", "QUIVERDANCE", "RAGEPOWDER", "SPIDERWEB", "STRINGSHOT", "TAILGLOW", "FOULPLAY", "NIGHTDAZE", "CRUNCH", "DARKPULSE", "SUCKERPUNCH", "NIGHTSLASH", "BITE", "FEINTATTACK", "SNARL", "ASSURANCE", "PAYBACK", "PURSUIT", "THIEF", "KNOCKOFF", "BEATUP", "FLING", "PUNISHMENT", "DARKVOID", "EMBARGO", "FAKETEARS", "FLATTER", "HONECLAWS", "MEMENTO", "NASTYPLOT", "QUASH", "SNATCH", "SWITCHEROO", "TAUNT", "TORMENT", "ROAROFTIME", "DRACOMETEOR", "OUTRAGE", "DRAGONRUSH", "SPACIALREND", "DRAGONPULSE", "DRAGONCLAW", "DRAGONTAIL", "DRAGONBREATH", "DUALCHOP", "TWISTER", "DRAGONRAGE", "DRAGONDANCE", "BOLTSTRIKE", "THUNDER", "VOLTTACKLE", "ZAPCANNON", "FUSIONBOLT", "THUNDERBOLT", "WILDCHARGE", "DISCHARGE", "THUNDERPUNCH", "VOLTSWITCH", "SPARK", "THUNDERFANG", "SHOCKWAVE", "ELECTROWEB", "CHARGEBEAM", "THUNDERSHOCK", "ELECTROBALL", "CHARGE", "MAGNETRISE", "THUNDERWAVE", "FOCUSPUNCH", "HIJUMPKICK", "CLOSECOMBAT", "FOCUSBLAST", "SUPERPOWER", "CROSSCHOP", "DYNAMICPUNCH", "HAMMERARM", "JUMPKICK", "AURASPHERE", "SACREDSWORD", "SECRETSWORD", "SKYUPPERCUT", "SUBMISSION", "BRICKBREAK", "DRAINPUNCH", "VITALTHROW", "CIRCLETHROW", "FORCEPALM", "LOWSWEEP", "REVENGE", "ROLLINGKICK", "WAKEUPSLAP", "KARATECHOP", "MACHPUNCH", "ROCKSMASH", "STORMTHROW", "VACUUMWAVE", "DOUBLEKICK", "ARMTHRUST", "TRIPLEKICK", "COUNTER", "FINALGAMBIT", "LOWKICK", "REVERSAL", "SEISMICTOSS", "BULKUP", "DETECT", "QUICKGUARD", "VCREATE", "BLASTBURN", "ERUPTION", "OVERHEAT", "BLUEFLARE", "FIREBLAST", "FLAREBLITZ", "MAGMASTORM", "FUSIONFLARE", "HEATWAVE", "INFERNO", "SACREDFIRE", "SEARINGSHOT", "FLAMETHROWER", "BLAZEKICK", "FIERYDANCE", "LAVAPLUME", "FIREPUNCH", "FLAMEBURST", "FIREFANG", "FLAMEWHEEL", "FIREPLEDGE", "FLAMECHARGE", "EMBER", "FIRESPIN", "INCINERATE", "HEATCRASH", "SUNNYDAY", "WILLOWISP", "SKYATTACK", "BRAVEBIRD", "HURRICANE", "AEROBLAST", "FLY", "BOUNCE", "DRILLPECK", "AIRSLASH", "AERIALACE", "CHATTER", "PLUCK", "SKYDROP", "WINGATTACK", "ACROBATICS", "AIRCUTTER", "GUST", "PECK", "DEFOG", "FEATHERDANCE", "MIRRORMOVE", "ROOST", "TAILWIND", "SHADOWFORCE", "SHADOWBALL", "SHADOWCLAW", "OMINOUSWIND", "SHADOWPUNCH", "HEX", "SHADOWSNEAK", "ASTONISH", "LICK", "NIGHTSHADE", "CONFUSERAY", "CURSE", "DESTINYBOND", "GRUDGE", "NIGHTMARE", "SPITE", "FRENZYPLANT", "LEAFSTORM", "PETALDANCE", "POWERWHIP", "SEEDFLARE", "SOLARBEAM", "WOODHAMMER", "LEAFBLADE", "ENERGYBALL", "SEEDBOMB", "GIGADRAIN", "HORNLEECH", "LEAFTORNADO", "MAGICALLEAF", "NEEDLEARM", "RAZORLEAF", "GRASSPLEDGE", "MEGADRAIN", "VINEWHIP", "BULLETSEED", "ABSORB", "GRASSKNOT", "AROMATHERAPY", "COTTONGUARD", "COTTONSPORE", "GRASSWHISTLE", "INGRAIN", "LEECHSEED", "SLEEPPOWDER", "SPORE", "STUNSPORE", "SYNTHESIS", "WORRYSEED", "EARTHQUAKE", "EARTHPOWER", "DIG", "DRILLRUN", "BONECLUB", "MUDBOMB", "BULLDOZE", "MUDSHOT", "BONEMERANG", "SANDTOMB", "BONERUSH", "MUDSLAP", "FISSURE", "MAGNITUDE", "MUDSPORT", "SANDATTACK", "SPIKES", "FREEZESHOCK", "ICEBURN", "BLIZZARD", "ICEBEAM", "ICICLECRASH", "ICEPUNCH", "AURORABEAM", "GLACIATE", "ICEFANG", "AVALANCHE", "ICYWIND", "FROSTBREATH", "ICESHARD", "POWDERSNOW", "ICEBALL", "ICICLESPEAR", "SHEERCOLD", "HAIL", "HAZE", "MIST", "EXPLOSION", "SELFDESTRUCT", "GIGAIMPACT", "HYPERBEAM", "LASTRESORT", "DOUBLEEDGE", "HEADCHARGE", "MEGAKICK", "THRASH", "EGGBOMB", "JUDGMENT", "SKULLBASH", "HYPERVOICE", "ROCKCLIMB", "TAKEDOWN", "UPROAR", "BODYSLAM", "TECHNOBLAST", "EXTREMESPEED", "HYPERFANG", "MEGAPUNCH", "RAZORWIND", "SLAM", "STRENGTH", "TRIATTACK", "CRUSHCLAW", "RELICSONG", "CHIPAWAY", "DIZZYPUNCH", "FACADE", "HEADBUTT", "RETALIATE", "SECRETPOWER", "SLASH", "HORNATTACK", "STOMP", "COVET", "ROUND", "SMELLINGSALT", "SWIFT", "VICEGRIP", "CUT", "STRUGGLE", "TACKLE", "WEATHERBALL", "ECHOEDVOICE", "FAKEOUT", "FALSESWIPE", "PAYDAY", "POUND", "QUICKATTACK", "SCRATCH", "SNORE", "DOUBLEHIT", "FEINT", "TAILSLAP", "RAGE", "RAPIDSPIN", "SPIKECANNON", "COMETPUNCH", "FURYSWIPES", "BARRAGE", "BIND", "DOUBLESLAP", "FURYATTACK", "WRAP", "CONSTRICT", "BIDE", "CRUSHGRIP", "ENDEAVOR", "FLAIL", "FRUSTRATION", "GUILLOTINE", "HIDDENPOWER", "HORNDRILL", "NATURALGIFT", "PRESENT", "RETURN", "SONICBOOM", "SPITUP", "SUPERFANG", "TRUMPCARD", "WRINGOUT", "ACUPRESSURE", "AFTERYOU", "ASSIST", "ATTRACT", "BATONPASS", "BELLYDRUM", "BESTOW", "BLOCK", "CAMOUFLAGE", "CAPTIVATE", "CHARM", "CONVERSION", "CONVERSION2", "COPYCAT", "DEFENSECURL", "DISABLE", "DOUBLETEAM", "ENCORE", "ENDURE", "ENTRAINMENT", "FLASH", "FOCUSENERGY", "FOLLOWME", "FORESIGHT", "GLARE", "GROWL", "GROWTH", "HARDEN", "HEALBELL", "HELPINGHAND", "HOWL", "LEER", "LOCKON", "LOVELYKISS", "LUCKYCHANT", "MEFIRST", "MEANLOOK", "METRONOME", "MILKDRINK", "MIMIC", "MINDREADER", "MINIMIZE", "MOONLIGHT", "MORNINGSUN", "NATUREPOWER", "ODORSLEUTH", "PAINSPLIT", "PERISHSONG", "PROTECT", "PSYCHUP", "RECOVER", "RECYCLE", "REFLECTTYPE", "REFRESH", "ROAR", "SAFEGUARD", "SCARYFACE", "SCREECH", "SHARPEN", "SHELLSMASH", "SIMPLEBEAM", "SING", "SKETCH", "SLACKOFF", "SLEEPTALK", "SMOKESCREEN", "SOFTBOILED", "SPLASH", "STOCKPILE", "SUBSTITUTE", "SUPERSONIC", "SWAGGER", "SWALLOW", "SWEETKISS", "SWEETSCENT", "SWORDSDANCE", "TAILWHIP", "TEETERDANCE", "TICKLE", "TRANSFORM", "WHIRLWIND", "WISH", "WORKUP", "YAWN", "GUNKSHOT", "SLUDGEWAVE", "SLUDGEBOMB", "POISONJAB", "CROSSPOISON", "SLUDGE", "VENOSHOCK", "CLEARSMOG", "POISONFANG", "POISONTAIL", "ACID", "ACIDSPRAY", "SMOG", "POISONSTING", "ACIDARMOR", "COIL", "GASTROACID", "POISONGAS", "POISONPOWDER", "TOXIC", "TOXICSPIKES", "PSYCHOBOOST", "DREAMEATER", "FUTURESIGHT", "PSYSTRIKE", "PSYCHIC", "EXTRASENSORY", "PSYSHOCK", "ZENHEADBUTT", "LUSTERPURGE", "MISTBALL", "PSYCHOCUT", "SYNCHRONOISE", "PSYBEAM", "HEARTSTAMP", "CONFUSION", "MIRRORCOAT", "PSYWAVE", "STOREDPOWER", "AGILITY", "ALLYSWITCH", "AMNESIA", "BARRIER", "CALMMIND", "COSMICPOWER", "GRAVITY", "GUARDSPLIT", "GUARDSWAP", "HEALBLOCK", "HEALPULSE", "HEALINGWISH", "HEARTSWAP", "HYPNOSIS", "IMPRISON", "KINESIS", "LIGHTSCREEN", "LUNARDANCE", "MAGICCOAT", "MAGICROOM", "MEDITATE", "MIRACLEEYE", "POWERSPLIT", "POWERSWAP", "POWERTRICK", "PSYCHOSHIFT", "REFLECT", "REST", "ROLEPLAY", "SKILLSWAP", "TELEKINESIS", "TELEPORT", "TRICK", "TRICKROOM", "WONDERROOM", "HEADSMASH", "ROCKWRECKER", "STONEEDGE", "ROCKSLIDE", "POWERGEM", "ANCIENTPOWER", "ROCKTHROW", "ROCKTOMB", "SMACKDOWN", "ROLLOUT", "ROCKBLAST", "ROCKPOLISH", "SANDSTORM", "STEALTHROCK", "WIDEGUARD", "DOOMDESIRE", "IRONTAIL", "METEORMASH", "FLASHCANNON", "IRONHEAD", "STEELWING", "MIRRORSHOT", "MAGNETBOMB", "GEARGRIND", "METALCLAW", "BULLETPUNCH", "GYROBALL", "HEAVYSLAM", "METALBURST", "AUTOTOMIZE", "IRONDEFENSE", "METALSOUND", "SHIFTGEAR", "HYDROCANNON", "WATERSPOUT", "HYDROPUMP", "MUDDYWATER", "SURF", "AQUATAIL", "CRABHAMMER", "DIVE", "SCALD", "WATERFALL", "RAZORSHELL", "BRINE", "BUBBLEBEAM", "OCTAZOOKA", "WATERPULSE", "WATERPLEDGE", "AQUAJET", "WATERGUN", "CLAMP", "WHIRLPOOL", "BUBBLE", "AQUARING", "RAINDANCE", "SOAK", "WATERSPORT", "WITHDRAW", "CORALBREAK", "ATOMICPUNCH", "METALWHIP", "SHUFFLE", "NUCLEARWASTE", "GAMMARAY", "RADIOACID", "SKYFALL", "FLAMEIMPACT", "DRAININGKISS", "EERIEIMPULSE", "ELECTRICTERRAIN", "ELECTRIFY", "FAIRYLOCK", "FAIRYWIND", "FELLSTINGER", "FLOWERSHIELD", "FLYINGPRESS", "FORESTSCURSE", "FREEZEDRY", "GEOMANCY", "GRASSYTERRAIN", "INFESTATION", "IONDELUGE", "KINGSSHIELD", "LANDSWRATH", "MAGNETICFLUX", "MATBLOCK", "MISTYTERRAIN", "MOONBLAST", "MYSTICALFIRE", "NOBLEROAR", "NUZZLE", "OBLIVIONWING", "PARABOLICCHARGE", "PARTINGSHOT", "PETALBLIZZARD", "PHANTOMFORCE", "PLAYNICE", "PLAYROUGH", "POWDER", "POWERUPPUNCH", "ROTOTILLER", "SPIKYSHIELD", "STICKYWEB", "TOPSYTURVY", "TRICKORTREAT", "VENOMDRENCH", "WATERSHURIKEN", "AROMATICMIST", "BABYDOLLEYES", "BELCH", "BOOMBURST", "CONFIDE", "CRAFTYSHIELD", "DAZZLINGGLEAM", "DISARMINGVOICE", "SUBDUCTION", "INSTANTCRUSH", "GETLUCKY", "LASERPULSE", "GEMSTONEGLIMMER", "HALFLIFE", "OCEANSWRATH", "FISSIONBURST", "CAUSTICBREATH", "NUCLEARSLASH", "THUNDERSTORM", "SUDDENSTRIKE", "EXPUNGE", "FALLOUT", "PROTONBEAM", "INFERNALBLADE", "QUANTUMLEAP", "METALCRUNCHER", "DRAINLIFE", "STICKYTERRAIN"};
 	//[E:tansheen(275088580093804544), E:hazmaBreeding(283450696970534912), E:Yoshi(242913559321772034), E:MetalheadHazma(256579922812862464), E:breeduntilyoubleed(269834497082523658), E:hopesanddreams(277388407204741121), E:Hazmacookie(283450124489719809), E:Spiderhazma(242295819867258880), E:Hazma(233355798720413696), E:HAZMA(253712746019946498), E:colonthree(283754243825860610), E:jetpackhazma(252466189438025728), E:lazy(269835087615492097), E:gentleCat(283871244544245761), E:Kawaii(242854765778698241), E:Chyinmunk(232930105821757442), E:SmugCat(241921432823660544), E:brothers(277322602614095872)]
-	//[R:Tanscure(240312763140931594), R:Bantastic mod :v(221441314280046592), R:Harambe Hitman inc(221577035955306496), R:Mee6(223121610050240513), R:Tatsumaki(223173049233571840), R:NeoUraniumBot(309533393656348673), R:kernels(272946299748483072), R:Server owner dream(228475589554733056), R:The Original Chat lurker(221356078082818049), R:Mad Hax(223795655414513664), R:Mild colored Potato(221343690101096449), R:Breedzards(222327235380510720), R:Moderator(221332112085745670), R:Ø\_(?)_/Ø(225940269650935809), R:Forum Admin(224828408209604608), R:Rare Male Selkid(237588051021266944), R:Kawaii Snek(239013237171945473), R:Make your dreams come true(248231878912507905), R:Developer(224191129682182144), R:WT extravaganza organizer(231698605034045440), R:Master Breeder(250354215774322690), R:Bred the dex(237601592730320897), R:Bots(223121776534749186), R:Insane genderless breeder(239776301869826048), R:Hidden power Breeder(233491020635963393), R:Shiny breeder(231699548819423232), R:Egg move Breeder(221584492190629890), R:Troll Breeder(246510241418706945), R:Veteran Breeder(223122234552745986), R:Breeder(225266317593149440), R:Still Hatching(223122640326492161), R:FRN(250357408268943361), R:Event organizer(277222764861980673), R:Fluffy Wofie Lycanroc of Doom(290456752338763786), R:Tancoon Bot(299551008349093891), R:@everyone(221317397653487626)]
+	//[R:Tanscure(240312763140931594), R:Bantastic mod :v(221441314280046592), R:Harambe Hitman inc(221577035955306496), R:Mee6(223121610050240513), R:Tatsumaki(223173049233571840), R:NeoUraniumBot(309533393656348673), R:kernels(272946299748483072), R:Server owner dream(228475589554733056), R:The Original Chat lurker(221356078082818049), R:Mad Hax(223795655414513664), R:Mild colored Potato(221343690101096449), R:Breedzards(222327235380510720), R:Moderator(221332112085745670), R:ÁèÆ_(?)_/ÔøΩ(225940269650935809), R:Forum Admin(224828408209604608), R:Rare Male Selkid(237588051021266944), R:Kawaii Snek(239013237171945473), R:Make your dreams come true(248231878912507905), R:Developer(224191129682182144), R:WT extravaganza organizer(231698605034045440), R:Master Breeder(250354215774322690), R:Bred the dex(237601592730320897), R:Bots(223121776534749186), R:Insane genderless breeder(239776301869826048), R:Hidden power Breeder(233491020635963393), R:Shiny breeder(231699548819423232), R:Egg move Breeder(221584492190629890), R:Troll Breeder(246510241418706945), R:Veteran Breeder(223122234552745986), R:Breeder(225266317593149440), R:Still Hatching(223122640326492161), R:FRN(250357408268943361), R:Event organizer(277222764861980673), R:Fluffy Wofie Lycanroc of Doom(290456752338763786), R:Tancoon Bot(299551008349093891), R:@everyone(221317397653487626)]
 	
 	 private final AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
 	 private final Map<Long, GuildMusicManager> musicManagers = new HashMap<>();
@@ -66,7 +66,7 @@ public class botListener extends ListenerAdapter{
 		//221317397653487626 breeder guild id
 		if(e.getGuild().getId().equals("221317397653487626")){
 			String user = e.getMember().getAsMention();
-			e.getGuild().getTextChannelById(e.getGuild().getId()).sendMessage("Welcome "+user+"!! Do you love Tancoons? Oh and my friend Neo wants me to tell you to read <#224397009073733632>. It's there for a reason!").queue();
+			e.getGuild().getTextChannelById(e.getGuild().getId()).sendMessage("Welcome "+user+"!! Do you love Tancoons? Oh and my friend Neo wants me to tell you to read <#224397009073733632>. It's there for a reason!\n Ask about our Mentorship Program!").queue();
 		}
 		
 	}
@@ -167,12 +167,12 @@ public class botListener extends ListenerAdapter{
 										
 					saveGameUser(gameuser);
 				}
-				
+
 				//272986135372759040 Custom sprite channel ID
 				//267561135245361153 bot-test Picture channel ID
 				if(e.getChannel().getId().equals("272986135372759040")/*||e.getChannel().getId().equals("267561135245361153")*/) {
 					if(!e.getMessage().getContentRaw().split(" ")[0].equals("!clear")) {
-						if(e.getMessage().getAttachments().isEmpty()) {
+						if(e.getMessage().getAttachments().isEmpty()&&e.getMessage().getEmbeds().isEmpty()) {
 							if(!e.getMessage().getContentRaw().startsWith(">>")){
 								//175984908802457600 User Vyhn id
 								e.getGuild().getMemberById("175984908802457600").getUser().openPrivateChannel().queue((value) ->
@@ -332,6 +332,14 @@ public class botListener extends ListenerAdapter{
 										achievement = "Aiden";
 										avalue = "Triggered Tancoon-bot 200 times.";
 										break;
+									case "500": 
+										achievement = "Are you in a cult?";
+										avalue = "Triggered Tancoon-bot 500 times.";
+										break;
+									case "1000": 
+										achievement = "Tancoon Cult Leader";
+										avalue = "Triggered Tancoon-bot 1000 times.";
+										break;
 										
 									}
 									if(achievement!=null){
@@ -372,8 +380,8 @@ public class botListener extends ListenerAdapter{
 							    });*/
 								
 								//221317397653487626 PU breeder guild id
-								//275088580093804544 tansheen emote id
-								e.getMessage().addReaction(e.getJDA().getGuildById("221317397653487626").getEmoteById("275088580093804544")).queue();
+								//468654394335035402 tansheen emote id
+								e.getMessage().addReaction(e.getJDA().getGuildById("221317397653487626").getEmoteById("468654394335035402")).queue();
 							}
 						    break;
 						  }
@@ -409,7 +417,7 @@ public class botListener extends ListenerAdapter{
 						}
 					}
 					/*
-					//« to J
+					//ÔøΩ to J
 					
 					if(e.getGuild().getId().equals("221317397653487626")){
 						if(e.getGuild().getMemberById("261621136209608704").getOnlineStatus().equals(OnlineStatus.OFFLINE)){
@@ -417,8 +425,8 @@ public class botListener extends ListenerAdapter{
 								String[] Jmessage = e.getMessage().getContentRaw().split(" ");
 								String text = "";
 								for(String s: Jmessage){
-									if(s.contains("«")||s.contains("Á")) {
-										text += "*" + s.replace("«", "J").replace("Á", "j") + "\n";
+									if(s.contains("ÔøΩ")||s.contains("ÔøΩ")) {
+										text += "*" + s.replace("ÔøΩ", "J").replace("ÔøΩ", "j") + "\n";
 									}
 								}
 								if(text!=""){
@@ -431,14 +439,14 @@ public class botListener extends ListenerAdapter{
 					
 					*/
 					
-					//J to «
+					//J to ÔøΩ
 					/*
 					if(e.getAuthor().getId().equals("279084770191998977")){
 						String[] Jmessage = e.getMessage().getContentRaw().split(" ");
 						String text = "";
 						for(String s: Jmessage){
 							if(s.contains("J")||s.contains("j")) {
-								text += "*" + s.replace("J", "«").replace("j", "Á") + "\n";
+								text += "*" + s.replace("J", "ÔøΩ").replace("j", "ÔøΩ") + "\n";
 							}
 						}
 						if(text!=""){
@@ -463,17 +471,15 @@ public class botListener extends ListenerAdapter{
 						}
 						
 						else if(message[0].equalsIgnoreCase("v!test")&&e.getMember().getUser().getId().equals("175984908802457600")) {
-							/*
-							EmbedBuilder embed = new EmbedBuilder();
-							embed.setTitle("Achievement unlocked!!")
-								 .setDescription("\u200B")
-								 .addField("TANCOON!","Triggered Tancoon-bot 10 times.", true)
-								 .setColor(new Color(194, 124, 14))
-								 .setThumbnail("https://cdn.discordapp.com/avatars/249187330731147264/0c27b4aceac24fa1da13cf8ae5c7947e.jpg");
-
-							e.getChannel().sendMessage(embed.build()).queue();
-							*/
-							//System.out.println(e.getJDA().getGuildById("221317397653487626").getRoles());
+							
+					            for(Role r:e.getMember().getRoles()) {
+					            	System.out.println(r.getName());
+					            	if (r.getName().toLowerCase().contains("vyhn")||r.getName().toLowerCase().contains("test")) {
+					            		e.getGuild().getController().removeSingleRoleFromMember(e.getMember(), r);
+					            		e.getChannel().sendMessage(r.getName()+"is removed.").queue();
+					            	}
+					            }
+					          
 						}
 						
 						//command yousawnothing
@@ -501,7 +507,7 @@ public class botListener extends ListenerAdapter{
 						else if(message[0].equalsIgnoreCase("v!tancoon")||message[0].equalsIgnoreCase("v!tanscure")||message[0].equalsIgnoreCase("v!tansheen")) {
 							MessageBuilder messageb = new MessageBuilder().append(" ");
 							
-							File f = new File("src/main/java//img/tancoon_"+(int )(Math.random() * 13 + 1)+".png");
+							File f = new File("src/main/java//img/tancoon_"+(int )(Math.random() * 15 + 1)+".png");
 							Message m = messageb.build();
 							e.getChannel().sendFile(f, "Tancoon.png", m).queue();
 						}
@@ -667,7 +673,7 @@ public class botListener extends ListenerAdapter{
 								e.getJDA().getGuildById("232329466825670657").getTextChannelById("322913516845531140").getHistory().retrievePast(100).queue((List<Message> messages) -> {
 									
 									boolean portcheck = false;
-									String port = "**Uranium en espaÒol**\n\n";
+									String port = "**Uranium en espaÈö≥l**\n\n";
 									String bestUser = "";
 									double similarity = 0;
 									for(Message m:messages) {
@@ -1150,8 +1156,8 @@ public class botListener extends ListenerAdapter{
 								}
 								else {
 									user = createAccount(userID);
-			
 									addUser(user);
+									e.getChannel().sendMessage("Thanks for playing! If you want to stop playing, type v!game toggleHatching to pause the game.").queue();
 								}
 
 
@@ -1159,7 +1165,6 @@ public class botListener extends ListenerAdapter{
 							else if(e.getAuthor().getId().equals("175984908802457600")&&message[1].equalsIgnoreCase("add")){
 
 								String userID = message[2];
-								System.out.println(userID);
 								Game_user gameUser = getGameUser(userID);
 								
 								if(message.length==5&&message[4].equalsIgnoreCase("shiny")){
@@ -2238,7 +2243,7 @@ public class botListener extends ListenerAdapter{
 		ArrayList<Game_poke> mCollection = new ArrayList<Game_poke>();
 		ArrayList<Game_poke> mParty = new ArrayList<Game_poke>();
 
-		Game_user user = new Game_user(id, mParty, mCollection, false, 0, generateEgg());
+		Game_user user = new Game_user(id, mParty, mCollection, true, 0, generateEgg());
 				
 		return user;
 	}
@@ -2422,7 +2427,7 @@ public class botListener extends ListenerAdapter{
 		
 		//generate iv
 		for(int i=0;i<6;i++) {
-			iv[i] = (int) (Math.random()*31);
+			iv[i] = (int) (Math.random()*32);
 		}
 		
 		Game_poke poke = new Game_poke(species, ability, exp, shiny, item, iv);
