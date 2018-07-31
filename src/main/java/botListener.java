@@ -80,9 +80,9 @@ public class botListener extends ListenerAdapter{
 			e.getGuild().getTextChannelById("221317397653487626").getHistory().retrievePast(10).queue((List<Message> messages) -> {
 				
 				for(Message m:messages) {
-					//mee6 bot id
-					if(m.getAuthor().getId().equals("159985870458322944")){
-						if(m.getContentRaw().startsWith(user)){
+					//tancoon bot id
+					if(m.getAuthor().getId().equals("249187330731147264")){
+						if(m.getContentRaw().startsWith("Welcome "+user)){
 							MessageBuilder messageb = new MessageBuilder().append(" ");
 							
 							File f = new File("src/main/java//img/nope.gif");
